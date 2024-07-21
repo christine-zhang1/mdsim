@@ -12,12 +12,12 @@ class BaseTask:
 
     def setup(self, trainer):
         self.trainer = trainer
-        if self.config["checkpoint"] is not None:
-            self.trainer.load_checkpoint(self.config["checkpoint"])
-        else:
-            ckpt_dir = (Path(self.trainer.config["cmd"]["checkpoint_dir"]) / 'checkpoint.pt')
-            if ckpt_dir.exists():
-                self.trainer.load_checkpoint(ckpt_dir)
+        # if self.config["checkpoint"] is not None:
+        #     self.trainer.load_checkpoint(self.config["checkpoint"])
+        # else:
+        #     ckpt_dir = (Path(self.trainer.config["cmd"]["checkpoint_dir"]) / 'checkpoint.pt')
+        #     if ckpt_dir.exists():
+        #         self.trainer.load_checkpoint(ckpt_dir)
             
         # save checkpoint path to runner state for slurm resubmissions
         self.chkpt_path = os.path.join(

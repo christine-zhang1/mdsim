@@ -3,13 +3,15 @@ includes:
 
 model:
   name: schnet
-  hidden_channels: 64
+  hidden_channels: 128
   num_filters: 64
   num_interactions: 6
   num_gaussians: 25
   cutoff: 5.0
   use_pbc: False
   otf_graph: True
+  regress_forces: True
+  direct_forces: True
 
 optim:
   batch_size: 100
