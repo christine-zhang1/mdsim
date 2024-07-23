@@ -25,7 +25,11 @@ from mdsim.models.gemnet.utils import (
     repeat_blocks,
 )
 
+from mdsim.models.gemnet.layers.efficient import EfficientInteractionDownProjection
+from mdsim.models.gemnet.layers.interaction_block import InteractionBlockTripletsOnly
+from mdsim.models.gemnet.layers.base_layers import Dense
 from mdsim.models.gemnet.layers.radial_basis import RadialBasis
+from mdsim.models.gemnet.layers.spherical_basis import CircularBasisLayer
 from mdsim.models.gemnet.layers.embedding_block import AtomEmbedding, EdgeEmbedding
 
 @registry.register_model("schnet")
@@ -76,7 +80,7 @@ class SchNetWrap(SchNet):
         num_filters=128,
         num_interactions=6,
         num_gaussians=50,
-        cutoff=10.0,
+        cutoff=10.0, # becomes 5.0 from schnet.yml file, which is the same as in gemnet-dT.yml
         readout="add",
         direct_forces=False,
     ):
@@ -86,6 +90,25 @@ class SchNetWrap(SchNet):
         self.cutoff = cutoff
         self.otf_graph = otf_graph
         self.direct_forces = direct_forces # when doing direct forces, keep regress_forces as true so it calculates force losses. see gemnet
+
+        # copied these from gemnet-dT.yml file for aspirin
+        num_radial = 6
+        rbf = {"name": "gaussian"}
+        envelope = {"name": "polynomial", "exponent": 5}
+        num_spherical = 7
+        cbf = {"name": "spherical_harmonics"}
+        emb_size_atom = 128
+        emb_size_edge = 128
+        activation = "silu"
+        emb_size_rbf = 16
+        emb_size_cbf = 16
+        emb_size_trip = 64
+        emb_size_bil_trip = 64
+        num_before_skip = 1
+        num_after_skip = 1
+        num_concat = 1
+        num_atom = 2
+        scale_file = "configs/md17/gemnet-dT-scale.json"
 
         super(SchNetWrap, self).__init__(
             hidden_channels=hidden_channels,
@@ -98,16 +121,73 @@ class SchNetWrap(SchNet):
 
         # initializing with the values from gemnet
         self.radial_basis = RadialBasis(
-            num_radial=6,
+            num_radial=num_radial,
             cutoff=self.cutoff,
-            rbf={"name": "gaussian"},
-            envelope={"name": "polynomial", "exponent": 5},
+            rbf=rbf,
+            envelope=envelope,
         )
 
+        radial_basis_cbf3 = RadialBasis(
+            num_radial=num_radial,
+            cutoff=cutoff,
+            rbf=rbf,
+            envelope=envelope,
+        )
+        self.cbf_basis3 = CircularBasisLayer(
+            num_spherical,
+            radial_basis=radial_basis_cbf3,
+            cbf=cbf,
+            efficient=True,
+        )
+
+        ### ------------------------------- Share Down Projections ------------------------------ ###
+        # Share down projection across all interaction blocks
+        self.mlp_rbf3 = Dense(
+            num_radial,
+            emb_size_rbf,
+            activation=None,
+            bias=False,
+        )
+        self.mlp_cbf3 = EfficientInteractionDownProjection(
+            num_spherical, num_radial, emb_size_cbf
+        )
+
+        # Share the dense Layer of the atom embedding block accross the interaction blocks
+        self.mlp_rbf_h = Dense(
+            num_radial,
+            emb_size_rbf,
+            activation=None,
+            bias=False,
+        )
+        self.mlp_rbf_out = Dense(
+            num_radial,
+            emb_size_rbf,
+            activation=None,
+            bias=False,
+        )
+        ### ------------------------------------------------------------------------------------- ###
+
         # Embedding block
-        self.atom_emb = AtomEmbedding(128) # value from gemnet-dT yaml file
+        self.atom_emb = AtomEmbedding(emb_size_atom)
         self.edge_emb = EdgeEmbedding(
-            128, 6, 128, activation="silu"
+            emb_size_atom, num_radial, emb_size_edge, activation=activation
+        )
+
+        # Interaction block
+        self.gemnet_int_block = InteractionBlockTripletsOnly(
+            emb_size_atom=emb_size_atom,
+            emb_size_edge=emb_size_edge,
+            emb_size_trip=emb_size_trip,
+            emb_size_rbf=emb_size_rbf,
+            emb_size_cbf=emb_size_cbf,
+            emb_size_bil_trip=emb_size_bil_trip,
+            num_before_skip=num_before_skip,
+            num_after_skip=num_after_skip,
+            num_concat=num_concat,
+            num_atom=num_atom,
+            activation=activation,
+            scale_file=scale_file,
+            name=f"Gemnet_IntBlock",
         )
 
     @conditional_grad(torch.enable_grad())
@@ -164,12 +244,35 @@ class SchNetWrap(SchNet):
             ) = self.generate_interaction_graph_simple(data)
             idx_s, idx_t = edge_index
 
+            # Calculate triplet angles.
+            cosφ_cab = inner_product_normalized(V_st[id3_ca], V_st[id3_ba])
+            rad_cbf3, cbf3 = self.cbf_basis3(D_st, cosφ_cab, id3_ca)
+
             rbf = self.radial_basis(D_st)
 
             # Embedding block
             h = self.atom_emb(data.atomic_numbers.long())
             # (nAtoms, emb_size_atom)
             m = self.edge_emb(h, rbf, idx_s, idx_t)  # (nEdges, emb_size_edge)
+
+            rbf3 = self.mlp_rbf3(rbf)
+            cbf3 = self.mlp_cbf3(rad_cbf3, cbf3, id3_ca, id3_ragged_idx)
+
+            rbf_h = self.mlp_rbf_h(rbf)
+            rbf_out = self.mlp_rbf_out(rbf)
+
+            h, m = self.gemnet_int_block(h=h,
+                m=m,
+                rbf3=rbf3,
+                cbf3=cbf3,
+                id3_ragged_idx=id3_ragged_idx,
+                id_swap=id_swap,
+                id3_ba=id3_ba,
+                id3_ca=id3_ca,
+                rbf_h=rbf_h,
+                idx_s=idx_s,
+                idx_t=idx_t,
+            )
 
             energy, forces = super(SchNetWrap, self).forward(z, pos, batch, direct_forces=self.direct_forces, h=h, m=m)
         return energy, forces
