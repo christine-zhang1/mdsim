@@ -529,6 +529,25 @@ class GemNetT(torch.nn.Module):
         pos = data.pos
         batch = data.batch
         atomic_numbers = data.atomic_numbers.long()
+        breakpoint()
+
+        # hardcoding to make pos be new positions of the first atom in a circle to calculate how conservative the force is
+        with open("mdsim/custom_force_pred/points_on_circle.txt") as data_file:
+            for i, line in enumerate(data_file):
+                if i == 250:
+                    break
+                x, y = line.rstrip().split()
+                # pos[(i-250)*21][0] = float(x)
+                # pos[(i-250)*21][1] = float(y)
+                # pos[(i-250)*21][2] = 0
+                pos[i*21][0] = float(x)
+                pos[i*21][1] = float(y)
+                pos[i*21][2] = 0
+
+        # fix all the other atoms to be the same position as the first molecule in the batch
+        for i in range(1, 250):
+            for j in range(1, 21):
+                pos[i*21+j] = pos[j]
 
         if self.regress_forces and not self.direct_forces:
             pos.requires_grad_(True)
