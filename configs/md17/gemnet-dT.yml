@@ -36,8 +36,8 @@ model:
   direct_forces: True
 
 optim:
-  batch_size: 500
-  eval_batch_size: 500
+  batch_size: 400
+  eval_batch_size: 400
   num_workers: 4
   lr_initial: 0.001
   optimizer: AdamW

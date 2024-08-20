@@ -9,8 +9,7 @@ print(F.shape)
 # Number of points
 N = 500
 assert(F.shape[0]/21 == N)
-# wait is the force array supposed to be length 500 or length 500*21?
-# i think there are forces per atom (so 500*21 forces) but we only care about the forces on the one atom?
+# there are forces per atom (so 500*21 forces) but we only care about the forces on the first atom of each molecule (there are N molecules)
 
 # Radius of the circle
 radius = 0.5
