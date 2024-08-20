@@ -531,20 +531,12 @@ class GemNetT(torch.nn.Module):
         atomic_numbers = data.atomic_numbers.long()
 
         # hardcoding to make pos be new positions of the first atom in a square to calculate how conservative the force is
-        num = 200 # half of the number of points on the square to ensure no out-of-memory error
-        with open("mdsim/custom_force_pred/points_on_square.txt") as data_file:
+        with open("mdsim/custom_force_pred/points_on_square_left.txt") as data_file:
             for i, line in enumerate(data_file):
-                # if i == num:
-                #     break
-                if i < num:
-                    continue
                 x, y = line.rstrip().split()
-                pos[(i-num)*21][0] = float(x)
-                pos[(i-num)*21][1] = float(y)
-                pos[(i-num)*21][2] = 0
-                # pos[i*21][0] = float(x)
-                # pos[i*21][1] = float(y)
-                # pos[i*21][2] = 0
+                pos[i*21][0] = float(x)
+                pos[i*21][1] = float(y)
+                pos[i*21][2] = 0
 
         # fix all the other atoms to be the same position as the first molecule in the batch
         for i in range(1, 200):

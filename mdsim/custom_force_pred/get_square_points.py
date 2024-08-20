@@ -6,7 +6,7 @@ def points_on_square(r, n, x_center, y_center):
     all_points.extend([(x_center-r, y_center+d*r/n*2) for d in range(-n//2, n//2)])
     return all_points
 
-points = points_on_square(0.25, 100, 2, -0.5)
+points = points_on_square(0.25, 200, 2, -0.5)
 
 with open("mdsim/custom_force_pred/points_on_square.txt", 'w') as outfile:
     for point in points:

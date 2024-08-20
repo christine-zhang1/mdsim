@@ -6,12 +6,14 @@ def check_conservative(dt):
     if dt:
         F = np.load("MODELPATH/md17-aspirin_10k_gemnet_t_dT/results/s2ef_predictions.npz")['forces']
     else:
-        res_1 = np.load("MODELPATH/md17-aspirin_10k_gemnet_t/results/s2ef_predictions_first_half.npz")
-        res_2 = np.load("MODELPATH/md17-aspirin_10k_gemnet_t/results/s2ef_predictions_second_half.npz")
-        F = np.vstack((res_1['forces'], res_2['forces']))
+        top = np.load("MODELPATH/md17-aspirin_10k_gemnet_t/results/s2ef_predictions_top.npz")
+        right = np.load("MODELPATH/md17-aspirin_10k_gemnet_t/results/s2ef_predictions_right.npz")
+        bottom = np.load("MODELPATH/md17-aspirin_10k_gemnet_t/results/s2ef_predictions_bottom.npz")
+        left = np.load("MODELPATH/md17-aspirin_10k_gemnet_t/results/s2ef_predictions_left.npz")
+        F = np.vstack((top['forces'], right['forces'], bottom['forces'], left['forces']))
 
     # Number of points
-    N = 400
+    N = 800
     assert(F.shape[0]/21 == N)
     # there are forces per atom (so 500*21 forces) but we only care about the forces on the first atom of each molecule (there are N molecules)
 
