@@ -1,15 +1,16 @@
 # calculate how conservative the forces are
 import numpy as np
 
+model_name = "schnet" # or "gemnet_t"
 def check_conservative(dt):
     # dt is a boolean saying whether we are using gemnet_dT or gemnet_t
     if dt:
         F = np.load("MODELPATH/md17-aspirin_10k_gemnet_t_dT/results/s2ef_predictions.npz")['forces']
     else:
-        top = np.load("MODELPATH/md17-aspirin_10k_gemnet_t/results/s2ef_predictions_top.npz")
-        right = np.load("MODELPATH/md17-aspirin_10k_gemnet_t/results/s2ef_predictions_right.npz")
-        bottom = np.load("MODELPATH/md17-aspirin_10k_gemnet_t/results/s2ef_predictions_bottom.npz")
-        left = np.load("MODELPATH/md17-aspirin_10k_gemnet_t/results/s2ef_predictions_left.npz")
+        top = np.load(f"MODELPATH/md17-aspirin_10k_{model_name}/results/s2ef_predictions_top.npz")
+        right = np.load(f"MODELPATH/md17-aspirin_10k_{model_name}/results/s2ef_predictions_right.npz")
+        bottom = np.load(f"MODELPATH/md17-aspirin_10k_{model_name}/results/s2ef_predictions_bottom.npz")
+        left = np.load(f"MODELPATH/md17-aspirin_10k_{model_name}/results/s2ef_predictions_left.npz")
         F = np.vstack((top['forces'], right['forces'], bottom['forces'], left['forces']))
 
     # Number of points
