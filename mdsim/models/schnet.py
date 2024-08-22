@@ -25,6 +25,7 @@ from mdsim.models.gemnet.utils import (
     repeat_blocks,
 )
 
+from mdsim.models.gemnet.layers.atom_update_block import OutputBlock
 from mdsim.models.gemnet.layers.efficient import EfficientInteractionDownProjection
 from mdsim.models.gemnet.layers.interaction_block import InteractionBlockTripletsOnly
 from mdsim.models.gemnet.layers.base_layers import Dense
@@ -109,6 +110,7 @@ class SchNetWrap(SchNet):
         num_concat = 1
         num_atom = 2
         scale_file = "configs/md17/gemnet-dT-scale.json"
+        output_init = "HeOrthogonal"
 
         super(SchNetWrap, self).__init__(
             hidden_channels=hidden_channels,
@@ -173,22 +175,41 @@ class SchNetWrap(SchNet):
             emb_size_atom, num_radial, emb_size_edge, activation=activation
         )
 
-        # Interaction block
-        self.gemnet_int_block = InteractionBlockTripletsOnly(
-            emb_size_atom=emb_size_atom,
-            emb_size_edge=emb_size_edge,
-            emb_size_trip=emb_size_trip,
-            emb_size_rbf=emb_size_rbf,
-            emb_size_cbf=emb_size_cbf,
-            emb_size_bil_trip=emb_size_bil_trip,
-            num_before_skip=num_before_skip,
-            num_after_skip=num_after_skip,
-            num_concat=num_concat,
-            num_atom=num_atom,
-            activation=activation,
-            scale_file=scale_file,
-            name=f"Gemnet_IntBlock",
-        )
+        # Interaction blocks
+        int_blocks = []
+        for i in range(2):
+            int_blocks.append(InteractionBlockTripletsOnly(
+                emb_size_atom=emb_size_atom,
+                emb_size_edge=emb_size_edge,
+                emb_size_trip=emb_size_trip,
+                emb_size_rbf=emb_size_rbf,
+                emb_size_cbf=emb_size_cbf,
+                emb_size_bil_trip=emb_size_bil_trip,
+                num_before_skip=num_before_skip,
+                num_after_skip=num_after_skip,
+                num_concat=num_concat,
+                num_atom=num_atom,
+                activation=activation,
+                scale_file=scale_file,
+                name=f"Gemnet_IntBlock_{i+1}",
+            ))
+
+        out_blocks = []
+        for i in range(3):
+            out_blocks.append(OutputBlock(emb_size_atom=emb_size_atom,
+                emb_size_edge=emb_size_edge,
+                emb_size_rbf=emb_size_rbf,
+                nHidden=num_atom,
+                num_targets=num_targets,
+                activation=activation,
+                output_init=output_init,
+                direct_forces=direct_forces,
+                scale_file=scale_file,
+                name=f"OutBlock_{i}",
+            ))
+
+        self.gemnet_int_blocks = torch.nn.ModuleList(int_blocks)
+        self.gemnet_out_blocks = torch.nn.ModuleList(out_blocks)
 
     @conditional_grad(torch.enable_grad())
     def _forward(self, data):
@@ -261,20 +282,29 @@ class SchNetWrap(SchNet):
             rbf_h = self.mlp_rbf_h(rbf)
             rbf_out = self.mlp_rbf_out(rbf)
 
-            h, m = self.gemnet_int_block(h=h,
-                m=m,
-                rbf3=rbf3,
-                cbf3=cbf3,
-                id3_ragged_idx=id3_ragged_idx,
-                id_swap=id_swap,
-                id3_ba=id3_ba,
-                id3_ca=id3_ca,
-                rbf_h=rbf_h,
-                idx_s=idx_s,
-                idx_t=idx_t,
-            )
+            E_t, F_st = self.gemnet_out_blocks[0](h, m, rbf_out, idx_t)
 
-            energy, forces = super(SchNetWrap, self).forward(z, pos, batch, direct_forces=self.direct_forces, h=h, m=m)
+            for i in range(2):
+                h, m = self.gemnet_int_blocks[i](
+                    h=h,
+                    m=m,
+                    rbf3=rbf3,
+                    cbf3=cbf3,
+                    id3_ragged_idx=id3_ragged_idx,
+                    id_swap=id_swap,
+                    id3_ba=id3_ba,
+                    id3_ca=id3_ca,
+                    rbf_h=rbf_h,
+                    idx_s=idx_s,
+                    idx_t=idx_t,
+                )
+
+                E, F = self.gemnet_out_blocks[i + 1](h, m, rbf_out, idx_t)
+                # (nAtoms, num_targets), (nEdges, num_targets)
+                F_st += F
+                E_t += E
+
+            energy, forces = super(SchNetWrap, self).forward(z, pos, batch, direct_forces=self.direct_forces, h=h, m=m, F_st=F_st, E_t=E_t)
         return energy, forces
 
     def forward(self, data):
