@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import glob
 
 # Step 1: Load the data from multiple log files
-file_list = sorted(glob.glob("*.log"))  # Adjust the path to your log files
+file_list = sorted(glob.glob("gemnet_T_logs/*.log"))  # Adjust the path to your log files
 all_data = []
 
 for file in file_list:
@@ -14,7 +14,7 @@ for file in file_list:
 plt.figure(figsize=(10, 6))
 
 for i, data in enumerate(all_data):
-    plt.plot(data, label=file_list[i])  # Plot each file's data as a line on the graph
+    plt.plot(data, label=file_list[i].split("/")[1])  # Plot each file's data as a line on the graph
 
 plt.xlabel('Time Step')
 plt.ylabel('Etot/N[eV]')

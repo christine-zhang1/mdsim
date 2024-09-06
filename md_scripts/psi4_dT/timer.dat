@@ -1,0 +1,110 @@
+
+Host: vox
+
+Timers On : Fri Sep  6 04:50:21 2024
+Timers Off: Fri Sep  6 04:52:41 2024
+
+Wall Time:      140.28 seconds
+
+                                                       Time (seconds)
+Module                                       User      System        Wall        Calls
+V: Grid                             :      6.200u      0.050s      3.742w      2 calls
+build grid                          :      5.533u      0.033s      3.328w      2 calls
+post-process grid                   :      0.667u      0.017s      0.414w      2 calls
+DFH: sparsity prep                  :      0.300u      0.017s      0.192w      2 calls
+Libint2ERI::Libint2ERI              :      0.733u      0.033s      0.458w     12 calls
+JK: (A|Q)^-1                        :      1.833u      0.717s      1.170w      2 calls
+JK: (A|mn)                          :      5.400u      0.467s      3.503w      2 calls
+JK: (Q|mn)                          :      3.967u      0.000s      2.392w      2 calls
+JK: (Q|mn) Write                    :      0.000u      0.300s      0.180w      2 calls
+HF: Form core H                     :      0.167u      0.000s      0.104w      2 calls
+HF: Form S/X                        :      0.067u      0.000s      0.023w      2 calls
+HF: Guess                           :      0.150u      0.000s      0.110w      2 calls
+SAD Guess                           :      0.150u      0.000s      0.104w      2 calls
+HF: Form G                          :    175.383u      8.367s    110.327w     26 calls
+RV: Form V                          :    138.933u      0.283s     83.583w     26 calls
+Properties                          :     97.650u      0.183s     59.150w  86778 calls
+Functional                          :     13.033u      0.033s      7.118w  86778 calls
+V_xc                                :     34.817u      0.083s     21.361w  83564 calls
+JK: D                               :      0.017u      0.000s      0.005w     26 calls
+JK: USO2AO                          :      0.000u      0.000s      0.000w     26 calls
+JK: JK                              :     36.417u      8.067s     26.724w     26 calls
+JK: (Q|mn) Read                     :      0.067u      5.983s      3.627w     52 calls
+JK: J                               :      2.083u      0.100s      1.303w     52 calls
+JK: J1                              :      0.933u      0.067s      0.638w     52 calls
+JK: J2                              :      1.067u      0.033s      0.647w     52 calls
+JK: K                               :     34.217u      1.517s     21.478w     52 calls
+JK: K1                              :     28.767u      1.517s     18.191w     52 calls
+JK: K2                              :      5.450u      0.000s      3.283w     52 calls
+JK: AO2USO                          :      0.000u      0.000s      0.000w     26 calls
+HF: Form F                          :      0.033u      0.017s      0.005w     26 calls
+HF: Form D                          :      0.017u      0.000s      0.004w     26 calls
+HF: DIIS                            :      0.350u      0.133s      0.298w     24 calls
+HF: Form C                          :      0.367u      0.000s      0.230w     24 calls
+Grad: V T Perturb                   :      0.167u      0.000s      0.095w      1 calls
+Grad: S                             :      0.017u      0.000s      0.007w      1 calls
+Grad: JK                            :     16.483u      0.600s     10.263w      1 calls
+JKGrad: Amn                         :      4.033u      0.200s      2.541w      1 calls
+JKGrad: Awmn                        :      0.000u      0.000s      0.000w      1 calls
+JKGrad: AB                          :      0.983u      0.067s      0.637w      1 calls
+JKGrad: UV                          :      0.133u      0.050s      0.103w      1 calls
+JKGrad: ABx                         :      0.167u      0.000s      0.107w      1 calls
+JKGrad: Amnx                        :     11.167u      0.283s      6.871w      1 calls
+Grad: XC                            :      9.667u      0.033s      5.817w      1 calls
+V_xc gradient                       :      2.750u      0.000s      1.559w   3214 calls
+
+--------------------------------------------------------------------------------------
+V: Grid                             :      6.200u      0.050s      3.742w      2 calls
+| build grid                        :      5.533u      0.033s      3.328w      2 calls
+| post-process grid                 :      0.667u      0.017s      0.414w      2 calls
+DFH: sparsity prep                  :      0.300u      0.017s      0.192w      2 calls
+| Libint2ERI::Libint2ERI            :      0.183u      0.017s      0.131w      2 calls
+Libint2ERI::Libint2ERI              :      0.367u      0.000s      0.216w      4 calls
+JK: (A|Q)^-1                        :      1.833u      0.717s      1.170w      2 calls
+| Libint2ERI::Libint2ERI            :      0.000u      0.017s      0.000w      2 calls
+JK: (A|mn)                          :      5.400u      0.467s      3.503w      2 calls
+JK: (Q|mn)                          :      3.967u      0.000s      2.392w      2 calls
+JK: (Q|mn) Write                    :      0.000u      0.300s      0.180w      2 calls
+HF: Form core H                     :      0.167u      0.000s      0.104w      2 calls
+HF: Form S/X                        :      0.067u      0.000s      0.023w      2 calls
+HF: Guess                           :      0.150u      0.000s      0.110w      2 calls
+| SAD Guess                         :      0.150u      0.000s      0.104w      2 calls
+HF: Form G                          :    175.383u      8.367s    110.327w     26 calls
+| RV: Form V                        :    138.933u      0.283s     83.583w     26 calls
+| | Properties                      :     91.167u      0.167s     55.165w  83564 calls
+| | Functional                      :     12.600u      0.033s      6.854w  83564 calls
+| | V_xc                            :     34.817u      0.083s     21.361w  83564 calls
+| JK: D                             :      0.017u      0.000s      0.005w     26 calls
+| JK: USO2AO                        :      0.000u      0.000s      0.000w     26 calls
+| JK: JK                            :     36.417u      8.067s     26.724w     26 calls
+| | JK: (Q|mn) Read                 :      0.067u      5.983s      3.627w     52 calls
+| | JK: J                           :      2.083u      0.100s      1.303w     52 calls
+| | | JK: J1                        :      0.933u      0.067s      0.638w     52 calls
+| | | JK: J2                        :      1.067u      0.033s      0.647w     52 calls
+| | JK: K                           :     34.217u      1.517s     21.478w     52 calls
+| | | JK: K1                        :     28.767u      1.517s     18.191w     52 calls
+| | | JK: K2                        :      5.450u      0.000s      3.283w     52 calls
+| JK: AO2USO                        :      0.000u      0.000s      0.000w     26 calls
+HF: Form F                          :      0.033u      0.017s      0.005w     26 calls
+HF: Form D                          :      0.017u      0.000s      0.004w     26 calls
+HF: DIIS                            :      0.350u      0.133s      0.298w     24 calls
+HF: Form C                          :      0.367u      0.000s      0.230w     24 calls
+Grad: V T Perturb                   :      0.167u      0.000s      0.095w      1 calls
+Grad: S                             :      0.017u      0.000s      0.007w      1 calls
+Grad: JK                            :     16.483u      0.600s     10.263w      1 calls
+| JKGrad: Amn                       :      4.033u      0.200s      2.541w      1 calls
+| | Libint2ERI::Libint2ERI          :      0.083u      0.000s      0.056w      1 calls
+| JKGrad: Awmn                      :      0.000u      0.000s      0.000w      1 calls
+| JKGrad: AB                        :      0.983u      0.067s      0.637w      1 calls
+| | Libint2ERI::Libint2ERI          :      0.000u      0.000s      0.000w      1 calls
+| JKGrad: UV                        :      0.133u      0.050s      0.103w      1 calls
+| JKGrad: ABx                       :      0.167u      0.000s      0.107w      1 calls
+| | Libint2ERI::Libint2ERI          :      0.000u      0.000s      0.000w      1 calls
+| JKGrad: Amnx                      :     11.167u      0.283s      6.871w      1 calls
+| | Libint2ERI::Libint2ERI          :      0.100u      0.000s      0.055w      1 calls
+Grad: XC                            :      9.667u      0.033s      5.817w      1 calls
+| Properties                        :      6.483u      0.017s      3.985w   3214 calls
+| Functional                        :      0.433u      0.000s      0.264w   3214 calls
+| V_xc gradient                     :      2.750u      0.000s      1.559w   3214 calls
+
+**************************************************************************************
