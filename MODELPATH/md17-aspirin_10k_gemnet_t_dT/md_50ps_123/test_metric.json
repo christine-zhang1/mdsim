@@ -1,0 +1,41 @@
+{
+    "forces_mae": {
+        "total": 15760.08203125,
+        "numel": 63000,
+        "metric": 0.2501600322420635
+    },
+    "forces_rmse": {
+        "total": 15760.08203125,
+        "numel": 63000,
+        "metric": 0.2501600322420635
+    },
+    "forces_cos": {
+        "total": 19099.759765625,
+        "numel": 21000,
+        "metric": 0.9095123697916667
+    },
+    "forces_magnitude": {
+        "total": 6690.1630859375,
+        "numel": 21000,
+        "metric": 0.3185791945684524
+    },
+    "energy_mae": {
+        "total": 212.697265625,
+        "numel": 1000,
+        "metric": 0.212697265625
+    },
+    "energy_rmse": {
+        "total": 212.697265625,
+        "numel": 1000,
+        "metric": 0.212697265625
+    },
+    "loss": {
+        "total": 497.9622802734375,
+        "numel": 1,
+        "metric": 497.9622802734375
+    },
+    "num_params": 2311510,
+    "running_time": 10.150096416473389,
+    "early_stop": false,
+    "simulated_frames": 500
+}
