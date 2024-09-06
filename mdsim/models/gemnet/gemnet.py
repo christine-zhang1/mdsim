@@ -530,18 +530,18 @@ class GemNetT(torch.nn.Module):
         batch = data.batch
         atomic_numbers = data.atomic_numbers.long()
 
-        # hardcoding to make pos be new positions of the first atom in a square to calculate how conservative the force is
-        with open("mdsim/custom_force_pred/points_on_square_left.txt") as data_file:
-            for i, line in enumerate(data_file):
-                x, y = line.rstrip().split()
-                pos[i*21][0] = float(x)
-                pos[i*21][1] = float(y)
-                pos[i*21][2] = 0
+        # # hardcoding to make pos be new positions of the first atom in a square to calculate how conservative the force is
+        # with open("mdsim/custom_force_pred/points_on_square_left.txt") as data_file:
+        #     for i, line in enumerate(data_file):
+        #         x, y = line.rstrip().split()
+        #         pos[i*21][0] = float(x)
+        #         pos[i*21][1] = float(y)
+        #         pos[i*21][2] = 0
 
-        # fix all the other atoms to be the same position as the first molecule in the batch
-        for i in range(1, 200):
-            for j in range(1, 21):
-                pos[i*21+j] = pos[j]
+        # # fix all the other atoms to be the same position as the first molecule in the batch
+        # for i in range(1, 200):
+        #     for j in range(1, 21):
+        #         pos[i*21+j] = pos[j]
 
         if self.regress_forces and not self.direct_forces:
             pos.requires_grad_(True)

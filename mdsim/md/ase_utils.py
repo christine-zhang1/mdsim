@@ -5,6 +5,7 @@ import os
 import yaml
 import torch
 from tqdm import tqdm
+import numpy as np
 from torch_geometric.data import Data
 
 from ase import Atoms, units
@@ -21,7 +22,7 @@ from mdsim.datasets import data_list_collater
 def atoms_to_batch(atoms):
     atomic_numbers = torch.Tensor(atoms.get_atomic_numbers())
     positions = torch.Tensor(atoms.get_positions())
-    cell = torch.Tensor(atoms.get_cell()).view(1, 3, 3)
+    cell = torch.Tensor(np.array(atoms.get_cell())).view(1, 3, 3)
     natoms = positions.shape[0]
 
     return Data(

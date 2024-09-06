@@ -2,11 +2,11 @@ model_dir: MODELPATH
 dataset_src: DATAPATH/md17/aspirin/10k/test
 dp_data_path: DATAPATH/md17/aspirin/10k/DP/test
 nequip_data_config: configs/simulate/nequip_data_cfg/aspirin.yml
-identifier: 300ps
+identifier: 25ps
 sim_type: ocp
 seed: 123
 save_freq: 100
-steps: 600000
+steps: 50000
 max_test_points: 10000
 
 kcal: False
