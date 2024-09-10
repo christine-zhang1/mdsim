@@ -17,7 +17,7 @@ else:
     from ase.calculators.emt import EMT
     size = 3
 
-md_dir = Path('../../MDsim/MODELPATH/md17-aspirin_10k_gemnet_t_dT/md_25ps_123')
+md_dir = Path('../MODELPATH/md17-aspirin_10k_gemnet_t_dT/md_25ps_123')
 traj = Trajectory(md_dir / 'atoms.traj')
 atoms = traj[0]
 
@@ -40,15 +40,10 @@ def printenergy(a):
     print('Energy per atom: Epot = %.3feV  Ekin = %.3feV (T=%3.0fK)  '
           'Etot = %.3feV' % (epot, ekin, ekin / (1.5 * units.kB), epot + ekin))
     
-def printforces(a):
-    """Function to print the forces"""
-    forces = a.get_forces()
-    print(f'FORCES {forces}')
-    
 # Now run the dynamics
-for i in range(10):
+for i in range(20):
     dyn.run(10)
-    printforces(atoms)
+    printenergy(atoms)
 
 # dyn.attach(MDLogger(dyn, atoms, f'md_{fs}.log', header=True, stress=False,
 #            peratom=True, mode="w"), interval=2000)
