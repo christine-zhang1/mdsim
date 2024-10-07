@@ -6,7 +6,10 @@ https://github.com/Open-Catalyst-Project/ocp
 import torch
 from torch import nn
 from torch_geometric.nn import radius_graph
-from torch_geometric.nn.acts import swish
+try:
+    from torch_geometric.nn.acts import swish
+except ImportError:
+    from torch_geometric.nn.resolver import swish
 from torch_geometric.nn.inits import glorot_orthogonal
 from torch_geometric.nn.models.dimenet import (
     BesselBasisLayer,

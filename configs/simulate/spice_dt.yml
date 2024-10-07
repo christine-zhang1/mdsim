@@ -1,0 +1,24 @@
+model_dir: MODELPATH
+# dataset_src: /data/shared/MLFF/SPICE/maceoff_split/test
+# dp_data_path: /data/shared/MLFF/SPICE/maceoff_split/test
+
+dataset_src:  /data/shared/MLFF/SPICE/maceoff_split/test
+dp_data_path:  /data/shared/MLFF/SPICE/maceoff_split/test
+
+# nequip_data_config: configs/simulate/nequip_data_cfg/aspirin.yml
+identifier: 25ps
+sim_type: ocp
+seed: 123
+save_freq: 100
+steps: 50000
+max_test_points: 10000
+# init_idx: 1950 # overridden in the command line
+
+# init_idx values:
+# 8539: benzene C6H6
+# 1950: ammonia NH3
+
+kcal: False
+T_init: 300.
+integrator: VelocityVerlet
+integrator_config: {"timestep": 0.5, "temperature": 300., "ttime": 20.}

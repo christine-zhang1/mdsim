@@ -1,0 +1,12 @@
+molecule: NH3
+init_idx: 1950
+
+GEMNET-DT CHECKPOINT
+molecule: NH3
+init_idx: 1950
+
+GEMNET-DT CHECKPOINT
+molecule: NH3
+init_idx: 1950
+
+GEMNET-DT CHECKPOINT

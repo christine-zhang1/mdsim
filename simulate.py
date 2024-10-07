@@ -8,10 +8,10 @@ import subprocess
 import random
 import torch
 import numpy as np
+from mace.calculators import mace_off
 
 from ase import units
 from ase.io import Trajectory
-
 
 try:
     from nequip.ase.nequip_calculator import nequip_calculator
@@ -106,6 +106,9 @@ def eval_and_init(config):
         
         calculator = nequip_calculator(Path(model_dir) / 'deployed_model.pth', device='cuda',
                                        energy_units_to_eV=1.)
+    elif config['sim_type'] == 'maceoff_calc':
+        calculator = mace_off()
+        test_metrics = {}
     else:
         raise NotImplementedError()
     
@@ -185,6 +188,11 @@ def simulate(config, calculator, test_metrics):
     if config["integrator"] in ['NoseHoover', 'NoseHooverChain']:
         config["integrator_config"]["temperature"] *= units.kB
         
+    if config["integrator"] == "VelocityVerlet":
+        del config["integrator_config"]["temperature"]
+        del config["integrator_config"]["ttime"]
+        
+    breakpoint()
     # set up simulator.
     integrator = getattr(md_integrator, config["integrator"])(
         atoms, **config["integrator_config"])

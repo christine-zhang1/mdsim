@@ -1,0 +1,27 @@
+T_init: 300.0
+config_yml: !!python/object/apply:pathlib.PosixPath
+- configs
+- simulate
+- aspirin.yml
+dataset_src: /data/shared/md17/aspirin/10k/test
+deepmd: false
+dp_data_path: /data/shared/md17/aspirin/10k/DP/test
+identifier: 50ps
+integrator: VelocityVerlet
+integrator_config:
+  temperature: 300.0
+  timestep: 1.0
+  ttime: 20.0
+kcal: false
+max_test_points: 10000
+model_dir: MODELPATH/md17-aspirin_10k_gemnet_t_dT
+nequip: false
+nequip_data_config: configs/simulate/nequip_data_cfg/aspirin.yml
+no_evaluate: false
+plumed: false
+purge: false
+save_freq: 100
+save_name: md_50ps_123
+seed: 123
+sim_type: ocp
+steps: 50000

@@ -1,0 +1,74 @@
+BENZENE GLOBAL VALUES
+INIT_IDX FOR BENZENE IS 8539 ON /data/shared/MLFF/SPICE/maceoff_split/test
+reference energy -59.1852 eV
+overall energy from atoms -6264.8347775989805 eV
+energy should be the sum of these: -6324.01997759898 eV
+
+SIMULATION VISUALIZATION RESULTS
+simulation does well. molecule does not explode or clump up, it just flies around for all of these
+
+MOLECULE FROM DATASET
+potential energy calculated by DFT: -6324.019941526893
+
+-------------------------------------------------------------------------------------------
+MOLECULE FROM SIMULATION ON GEMNET-DT MACEOFF CHECKPOINT
+
+TRAJ[0]
+potential energy calculated by DFT: -6324.019941526893
+
+TRAJ[-1]
+potential energy calculated by DFT: -6323.850693805453
+energy is off by 169 meV
+
+TRAJ[250] (HALFWAY)
+potential energy calculated by DFT: -6323.968775335247
+energy is off by 51.2 meV
+
+TRAJ[125] (1/4)
+potential energy calculated by DFT: -6323.953261594676
+energy is off by 66.7 meV
+
+-------------------------------------------------------------------------------------------
+MOLECULE FROM SIMULATION USING MACE_OFF CALCULATOR
+
+TRAJ[0]
+potential energy calculated by DFT: -6324.019941526893
+energy off by 1e-5
+
+TRAJ[-1]
+potential energy calculated by DFT: -6323.682207816017
+energy is off by 338 meV
+
+TRAJ[250]
+potential energy calculated by DFT: -6323.676135456327
+energy off by 344 meV
+
+-------------------------------------------------------------------------------------------
+MOLECULE FROM SIMULATION ON GEMNET-DT CHECKPOINT (trained on md17, might not be same level of dft calculation)
+
+TRAJ[0]
+potential energy calculated by DFT: -6324.019941526893
+
+TRAJ[-1]
+potential energy calculated by DFT: -6323.860770491708
+energy off by 159 meV
+
+TRAJ[250]
+potential energy calculated by DFT: -6323.868999750371
+energy is off by 151 meV
+
+-------------------------------------------------------------------------------------------
+MOLECULE FROM SIMULATION ON GEMNET-T CHECKPOINT (trained on md17, might not be same level of dft calculation)
+
+TRAJ[0]
+potential energy calculated by DFT: -6324.019941526893
+energy is off by -0.03607208782341331 meV
+
+TRAJ[-1]
+potential energy calculated by DFT: -6323.827066144296
+energy is off by 192.9114546846904 meV
+
+TRAJ[250]
+potential energy calculated by DFT: -6323.830141713598
+energy is off by 189.83588538230833 meV
+

@@ -56,4 +56,4 @@ optim:
   loss_energy: mae
   loss_force: l2mae
 
-checkpoint: "MODELPATH/md17-aspirin_10k_gemnet_t_dT/checkpoints/best_checkpoint.pt"
+# checkpoint: "MODELPATH/md17-aspirin_10k_gemnet_t_dT/checkpoints/best_checkpoint.pt"

@@ -1,0 +1,34 @@
+BENZENE GLOBAL VALUES
+INIT_IDX FOR BENZENE IS 1950 ON /data/shared/MLFF/SPICE/maceoff_split/test (there's multiple ammonia though)
+
+ON VISUALIZATION
+maceoff_split gemnet-dT does well. the ammonia flies very fast but it stays together
+
+MOLECULE FROM DATASET
+reference energy = -12.9454
+overall energy from atoms = -1527.0909198959782
+sum of these = -1540.0363198959783
+potential energy calculated by DFT: -1540.036271692291
+
+-------------------------------------------------------------------------------------------
+MOLECULE FROM SIMULATION ON TOBY'S DIRECT FORCE MACEOFF CHECKPOINT
+
+TRAJ[0]
+potential energy calculated by DFT: -1540.036271692291
+
+TRAJ[-1]
+potential energy calculated by DFT: -1540.036271692291
+energy is off by 0.048203687356362934 meV
+
+-------------------------------------------------------------------------------------------
+MOLECULE FROM SIMULATION USING MACE_OFF CALCULATOR
+
+TRAJ[0]
+potential energy calculated by DFT: -1540.036271692291
+energy is off by 0.048203687356362934 meV
+
+TRAJ[-1]
+potential energy calculated by DFT: -1540.036271692291
+energy is off by 0.048203687356362934 meV
+
+these are all exactly the same as the potential energy calculated by DFT on the dataset molecule

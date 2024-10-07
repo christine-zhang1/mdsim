@@ -1,0 +1,27 @@
+GEMNET-DT TRAINED ON MACE_OFF SPLIT
+
+molecule: F5C6H
+traj[0] potential energy: -19833.625348103793
+traj[-1] potential energy: -19833.627069565246
+energy is off by -1.7214614526892547 meV
+---------------------------------------------------------
+molecule: CH4CH4
+traj[0] potential energy: -2206.093668323938
+traj[-1] potential energy: -2205.9814301134443
+energy is off by 112.23821049361504 meV
+---------------------------------------------------------
+molecule: IC2H5
+traj[0] potential energy: -10260.280228147089
+traj[-1] potential energy: -10260.27249902379
+energy is off by 7.729123299213825 meV
+---------------------------------------------------------
+molecule: I2CH2OH2
+traj[0] potential energy: -19357.397987237295
+traj[-1] potential energy: -19357.358091635586
+energy is off by 39.895601708849426 meV
+---------------------------------------------------------
+molecule: S2H2S2H2
+traj[0] potential energy: -43413.38325218731
+traj[-1] potential energy: -43413.30219049099
+energy is off by 81.06169632083038 meV
+---------------------------------------------------------

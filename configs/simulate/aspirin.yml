@@ -2,7 +2,7 @@ model_dir: MODELPATH
 dataset_src: /data/shared/md17/aspirin/10k/test
 dp_data_path: /data/shared/md17/aspirin/10k/DP/test
 nequip_data_config: configs/simulate/nequip_data_cfg/aspirin.yml
-identifier: 25ps
+identifier: 50ps
 sim_type: ocp
 seed: 123
 save_freq: 100
@@ -10,6 +10,6 @@ steps: 50000
 max_test_points: 10000
 
 kcal: False
-T_init: 500.
-integrator: NoseHoover
-integrator_config: {"timestep": 0.5, "temperature": 500., "ttime": 20.}
+T_init: 300.
+integrator: VelocityVerlet
+integrator_config: {"timestep": 1., "temperature": 300., "ttime": 20.}

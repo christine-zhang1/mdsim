@@ -1,0 +1,27 @@
+T_init: 300.0
+config_yml: !!python/object/apply:pathlib.PosixPath
+- configs
+- simulate
+- spice_dt.yml
+dataset_src: /data/shared/MLFF/SPICE/maceoff_split/test
+deepmd: false
+dp_data_path: /data/shared/MLFF/SPICE/maceoff_split/test
+identifier: 25ps
+init_idx: 20362
+integrator: VelocityVerlet
+integrator_config:
+  temperature: 300.0
+  timestep: 0.5
+  ttime: 20.0
+kcal: false
+max_test_points: 10000
+model_dir: MODELPATH/maceoff_split_gemnet_dT_results
+nequip: false
+no_evaluate: false
+plumed: false
+purge: false
+save_freq: 100
+save_name: md_25ps_123_init_20362
+seed: 123
+sim_type: ocp
+steps: 50000

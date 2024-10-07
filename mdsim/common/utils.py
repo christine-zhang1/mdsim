@@ -416,6 +416,8 @@ def build_config(args, args_override):
     return config
 
 def compose_data_cfg(data_cfg):
+    if type(data_cfg) == list:
+        data_cfg = data_cfg[0]
     dataset_name = data_cfg['name']
     if dataset_name == 'md17':
         data_cfg['src'] = os.path.join(data_cfg['src'], data_cfg['molecule'])

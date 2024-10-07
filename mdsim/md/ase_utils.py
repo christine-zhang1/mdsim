@@ -239,7 +239,7 @@ class Simulator:
                  restart=False,
                  save_frequency=100,
                  min_temp=0.1,
-                 max_temp=100000):
+                 max_temp=1000):
         self.atoms = atoms
         self.integrator = integrator
         self.save_dir = Path(save_dir)
@@ -250,7 +250,7 @@ class Simulator:
         # intialize system momentum 
         if not restart:
             assert (self.atoms.get_momenta() == 0).all()
-            MaxwellBoltzmannDistribution(self.atoms, T_init * units.kB)
+            MaxwellBoltzmannDistribution(self.atoms, temperature_K=T_init)
         
         # attach trajectory dump 
         self.traj = Trajectory(self.save_dir / 'atoms.traj', 'a', self.atoms)
@@ -271,7 +271,7 @@ class Simulator:
             ekin = self.atoms.get_kinetic_energy()
             temp = ekin / (1.5 * units.kB * self.natoms)
             if temp < self.min_temp or temp > self.max_temp:
-                print(f'Temprature {temp:.2f} is out of range: \
+                print(f'Temperature {temp:.2f} is out of range: \
                         [{self.min_temp:.2f}, {self.max_temp:.2f}]. \
                         Early stopping the simulation.')
                 early_stop = True
