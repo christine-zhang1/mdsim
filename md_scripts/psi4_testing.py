@@ -60,9 +60,9 @@ def get_atoms_from_simulation(path, traj_idx):
 
 if __name__ == "__main__":
     init_idx = int(sys.argv[1]) # init_idx
-    path_dt = f'/home/christine/mdsim/MODELPATH/maceoff_split_gemnet_dT_results/md_25ps_123_init_{init_idx}'
-    path_calc = f'/home/christine/mdsim/MODELPATH/maceoff_split_gemnet_dT_results/md_25ps_maceoff_calc_123_init_{init_idx}'
-    with open('/home/christine/mdsim/md_scripts/records_str_atoms_leq_6.txt', 'a') as f:
+    path_dt = f'/home/christine/mdsim/MODELPATH/maceoff_split_gemnet_dT_100k/md_25ps_123_init_{init_idx}'
+    path_calc = f'/home/christine/mdsim/MODELPATH/maceoff_split_gemnet_T_100k/md_25ps_123_init_{init_idx}'
+    with open('/home/christine/mdsim/md_scripts/records_gemnet_t_dt.txt', 'a') as f:
         # traj[0]
         atoms = get_atoms_from_simulation(path_dt, traj_idx=0)
         f.write(f'molecule: {str(atoms.symbols)}\n')
@@ -88,7 +88,7 @@ if __name__ == "__main__":
         f.write(f'energy is off by {(pe - pe_0)*1000} meV\n\n')
         
         atoms = get_atoms_from_simulation(path_calc, traj_idx=0)
-        f.write(f'MACEOFF CALCULATOR\n')
+        f.write(f'GEMNET-T CHECKPOINT\n')
         calc = Psi4(atoms = atoms,
             method = 'wB97M-D3BJ',
             memory = '2GB',

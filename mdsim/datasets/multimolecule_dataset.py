@@ -89,6 +89,7 @@ class MultiMoleculeDataset(Dataset):
                 carbon_idices = np.load("idxs_carbon_all.npy")
                 carbon_idices = carbon_idices[:carbon_idx]
             self.lmbd_datasets = [Subset(dataset, carbon_idices) for dataset in self.lmbd_datasets]
+        percentages = [0.10]
         if percentages is not None:
             self.lmbd_datasets = [
                 Subset(dataset, self.get_indices(len(dataset), percentage))

@@ -2,8 +2,8 @@ model_dir: MODELPATH
 # dataset_src: /data/shared/MLFF/SPICE/maceoff_split/test
 # dp_data_path: /data/shared/MLFF/SPICE/maceoff_split/test
 
-dataset_src:  /data/shared/MLFF/SPICE/maceoff_split/test
-dp_data_path:  /data/shared/MLFF/SPICE/maceoff_split/test
+dataset_src:  /data/shared/spice/maceoff_split/test
+dp_data_path:  /data/shared/spice/maceoff_split/test
 
 # nequip_data_config: configs/simulate/nequip_data_cfg/aspirin.yml
 identifier: 25ps

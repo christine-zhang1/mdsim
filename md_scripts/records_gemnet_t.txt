@@ -1,0 +1,10 @@
+this is using my trained gemnet-t model on the entire dataset, mean -140
+so energy is still not being conserved (as expected from other results, this was just double checking)
+molecule: C6H6
+init_idx: 8539
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -6324.0199353045655
+traj[-1] potential energy: -6323.820915895632
+energy is off by 199.01940893305436 meV
+---------------------------------------------------------

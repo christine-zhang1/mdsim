@@ -60,7 +60,8 @@ def eval_and_init(config):
         if config['no_evaluate']:
             test_metrics = {}
         else:
-            test_metrics = calculator.trainer.validate('test', max_points=config["max_test_points"])
+            test_metrics = {} # save time since we just care about the actual simulation. changing no_evaluate doesn't seem to work
+            # test_metrics = calculator.trainer.validate('test', max_points=config["max_test_points"])
         test_metrics['num_params'] = sum(p.numel() for p in calculator.trainer.model.parameters())
     elif config['sim_type'] == 'dp':
         # deploy model.
@@ -192,7 +193,6 @@ def simulate(config, calculator, test_metrics):
         del config["integrator_config"]["temperature"]
         del config["integrator_config"]["ttime"]
         
-    breakpoint()
     # set up simulator.
     integrator = getattr(md_integrator, config["integrator"])(
         atoms, **config["integrator_config"])

@@ -36,6 +36,18 @@ from .utils import (
     repeat_blocks,
 )
 
+valid_elem = {35: -70045.28385080204,  # Br
+    6: -1030.5671648271828,  # C
+    17: -12522.649269035726,  # Cl
+    9: -2715.318528602957,  # F
+    1: -13.571964772646918,  # H
+    53: -8102.524593409054,  # I
+    7: -1486.3750255780376,  # N
+    8: -2043.933693071156,  # O
+    15: -9287.407133426237,  # P
+    16: -10834.4844708122  # S
+}
+
 
 @registry.register_model("gemnet_t")
 class GemNetT(torch.nn.Module):
@@ -598,6 +610,14 @@ class GemNetT(torch.nn.Module):
             # (nAtoms, num_targets), (nEdges, num_targets)
             F_st += F
             E_t += E
+            
+        # assert E_t.shape[0] == data.atomic_numbers.shape[0]
+        # vacuum_energies = [0] * E_t.shape[0]
+        # for i in range(data.atomic_numbers.shape[0]):
+        #     vacuum_energies[i] = valid_elem[data.atomic_numbers[i].item()]
+        # vacuum_energies = torch.tensor(vacuum_energies)
+        # vacuum_energies = torch.reshape(vacuum_energies, (-1, 1)).to(data.pos.device)
+        # E_t = E_t - vacuum_energies
 
         nMolecules = torch.max(batch) + 1
         if self.extensive:

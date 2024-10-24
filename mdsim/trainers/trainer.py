@@ -13,6 +13,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch_geometric
+from torch_geometric.data import Batch
 import yaml
 from torch.nn.parallel.distributed import DistributedDataParallel
 from torch.utils.data import DataLoader
@@ -364,7 +365,7 @@ class Trainer(ABC):
             else:
                 if not self.no_energy:
                     self.normalizers["target"] = Normalizer(
-                        tensor=self.train_loader.dataset.data.y[
+                        tensor=self.train_loader.dataset.data.reference_energy[ # used to be data.y
                             self.train_loader.dataset.__indices__
                         ],
                         device=self.device,
@@ -409,7 +410,7 @@ class Trainer(ABC):
                 else:
                     if not self.no_energy:
                         self.normalizers["grad_target"] = Normalizer(
-                            tensor=self.train_loader.dataset.data.y[
+                            tensor=self.train_loader.dataset.data.reference_energy[ # used to be data.y
                                 self.train_loader.dataset.__indices__
                             ],
                             device=self.device,
@@ -712,7 +713,7 @@ class Trainer(ABC):
             desc="device {}".format(rank),
             disable=disable_tqdm,
         ):
-            with torch.cuda.amp.autocast(enabled=self.scaler is not None):
+            with torch.amp.autocast("cuda", enabled=self.scaler is not None):
                 out = self._forward(batch_list)
 
             if self.normalizers is not None:
@@ -758,16 +759,15 @@ class Trainer(ABC):
                     per_image_forces = _per_image_free_forces
                     predictions["chunk_idx"].extend(_chunk_idx)
                 predictions["forces"].extend(per_image_forces)
-                break # only doing one batch right now
             else:
                 predictions["energy"] = out["energy"].detach()
                 predictions["forces"] = out["forces"].detach()
                 return predictions
 
-        predictions["forces"] = np.array(predictions["forces"])
-        predictions["chunk_idx"] = np.array(predictions["chunk_idx"])
-        predictions["energy"] = np.array(predictions["energy"])
-        predictions["id"] = np.array(predictions["id"])
+        predictions["forces"] = np.array(predictions["forces"], dtype="object")
+        predictions["chunk_idx"] = np.array(predictions["chunk_idx"], dtype="object")
+        predictions["energy"] = np.array(predictions["energy"], dtype="object")
+        predictions["id"] = np.array(predictions["id"], dtype="object")
         self.save_results(
             predictions, results_file, keys=["energy", "forces", "chunk_idx"]
         )
@@ -831,9 +831,14 @@ class Trainer(ABC):
 
                 # Get a batch.
                 batch = next(train_loader_iter)
+                
+                # filtering the batch to get rid of molecules with ref energy < -250
+                # mask = batch[0].reference_energy >= -250
+                # filtered = batch[0][mask]
+                # batch = [Batch.from_data_list(filtered).to(self.device)]
 
                 # Forward, loss, backward.
-                with torch.cuda.amp.autocast(enabled=self.scaler is not None):
+                with torch.amp.autocast('cuda', enabled=self.scaler is not None):
                     out = self._forward(batch)
                     loss = self._compute_loss(out, batch)
                 loss = self.scaler.scale(loss) if self.scaler else loss
@@ -972,7 +977,7 @@ class Trainer(ABC):
             total=np.ceil(max_points // batch_size)
         ):
             # Forward.
-            with torch.cuda.amp.autocast(enabled=self.scaler is not None):
+            with torch.amp.autocast('cuda', enabled=self.scaler is not None):
                 out = self._forward(batch)
             loss = self._compute_loss(out, batch)
 
@@ -1038,18 +1043,46 @@ class Trainer(ABC):
 
     def _compute_loss(self, out, batch_list):
         loss = []
-
+        # valid_elem = {35: -70045.28385080204,  # Br
+        #           6: -1030.5671648271828,  # C
+        #           17: -12522.649269035726,  # Cl
+        #           9: -2715.318528602957,  # F
+        #           1: -13.571964772646918,  # H
+        #           53: -8102.524593409054,  # I
+        #           7: -1486.3750255780376,  # N
+        #           8: -2043.933693071156,  # O
+        #           15: -9287.407133426237,  # P
+        #           16: -10834.4844708122}  # S
+        
+        # vacuum_energies = [0] * 128
+        # for batch in batch_list:
+        #     for i in range(len(batch.atomic_numbers)):
+        #         vacuum_energies[batch.batch[i].item()] += valid_elem[batch.atomic_numbers[i].item()]
+        # vacuum_energies = torch.tensor(vacuum_energies)
+        
+        # self.normalizers["target"] = Normalizer(
+        #     mean=torch.mean(batch_list[0].reference_energy),
+        #     std=torch.std(batch_list[0].reference_energy),
+        #     device=self.device,
+        # )
+        # self.normalizers["grad_target"] = Normalizer(
+        #     mean=torch.mean(batch_list[0].force),
+        #     std=torch.std(batch_list[0].force),
+        #     device=self.device,
+        # )
+        
         # Energy loss.
         if not self.no_energy:
             energy_target = torch.cat(
-                [batch.y.to(self.device) for batch in batch_list], dim=0
+                [batch.reference_energy.to(self.device) for batch in batch_list], dim=0 # used to be batch.y
             )
             if self.normalizer.get("normalize_labels", False):
+                # energy_target = energy_target - vacuum_energies.to(self.device)
                 energy_target = self.normalizers["target"].norm(energy_target)
             energy_mult = self.config["optim"].get("energy_coefficient", 1)
             loss.append(
                 energy_mult * self.loss_fn["energy"](out["energy"], energy_target)
-            )
+            ) 
 
         # Force loss.
         if self.config["model_attributes"].get("regress_forces", True):
@@ -1134,7 +1167,7 @@ class Trainer(ABC):
         
         if not self.no_energy:
             target.update({
-                "energy": torch.cat([batch.y.to(self.device) for batch in batch_list], dim=0)
+                "energy": torch.cat([batch.reference_energy.to(self.device) for batch in batch_list], dim=0) # used to be batch.y
             })
 
         out["natoms"] = natoms
@@ -1238,7 +1271,7 @@ class Trainer(ABC):
             for k in keys:
                 if k == "forces":
                     gather_results[k] = np.concatenate(
-                        np.array(gather_results[k])[idx]
+                        np.array(gather_results[k], dtype="object")[idx]
                     )
                 elif k == "chunk_idx":
                     gather_results[k] = np.cumsum(

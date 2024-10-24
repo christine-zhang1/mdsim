@@ -422,7 +422,10 @@ def compose_data_cfg(data_cfg):
     if dataset_name == 'md17':
         data_cfg['src'] = os.path.join(data_cfg['src'], data_cfg['molecule'])
         data_cfg['name'] = 'md17-' + data_cfg['molecule']
-    src = os.path.join(data_cfg['src'], data_cfg['size'])
+    if dataset_name == 'spice':
+        src = data_cfg['src']
+    else:
+        src = os.path.join(data_cfg['src'], data_cfg['size'])
     data_cfg['src'] = os.path.join(src, 'train')
     
     norm_stats = np.load(os.path.join(src, 'metadata.npy'), allow_pickle=True).item()
@@ -434,11 +437,19 @@ def compose_data_cfg(data_cfg):
         data_cfg['grad_target_mean'] = 0.
         data_cfg['grad_target_std'] = 1.
         data_cfg['normalize_labels'] = True
-    else:
-        data_cfg['target_mean'] = float(norm_stats['e_mean'])
-        data_cfg['target_std'] = float(norm_stats['e_std'])
-        data_cfg['grad_target_mean'] = float(norm_stats['f_mean'])
-        data_cfg['grad_target_std'] = float(norm_stats['f_std'])
+    else: # HARDCODING THIS DEFINITELY BAD
+        # data_cfg['target_mean'] = float(norm_stats['e_mean'])
+        # data_cfg['target_std'] = float(norm_stats['e_std'])
+        # data_cfg['grad_target_mean'] = float(norm_stats['f_mean'])
+        # data_cfg['grad_target_std'] = float(norm_stats['f_std'])
+        # data_cfg['target_mean'] = -160.3177947998047
+        data_cfg['target_std'] = 1.0
+        # data_cfg['grad_target_mean'] = 0.0
+        # data_cfg['grad_target_std'] = 1.0
+        data_cfg['target_mean'] = -140.80356519035792
+        # data_cfg['target_std'] = 69.1667169308504
+        data_cfg['grad_target_mean'] = 0.0
+        data_cfg['grad_target_std'] = 1.0757999822144813
     # train, val, test
     return data_cfg
 

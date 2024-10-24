@@ -1,7 +1,7 @@
 trainer: trainer
 
 dataset:
-  src: /data/shared/md17
+  src: /data/sanjeevr/md17
   name: md17
   size: 10k
   molecule: aspirin

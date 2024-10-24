@@ -12,19 +12,17 @@ dataset:
   normalize_labels: true
   return_formation_energy: true
   size: all
-  src:
-  - /data/shared/MLFF/SPICE/maceoff_split/train
-  target_mean: -160.3177947998047
-  target_std: 1.0
-- src:
-  - /data/shared/MLFF/SPICE/maceoff_split/test
+  src: /data/shared/spice/maceoff_split
+  # target_mean: -160.3177947998047
+  # target_std: 1.0
+# - src: /data/shared/MLFF/SPICE/maceoff_split/test
 distributed: false
 distributed_backend: nccl
 distributed_port: 13356
 finetuning: false
 freeze_amount: max
 freeze_rep: false
-identifier: maceoff_split
+identifier: maceoff_split_testing_junk
 is_debug: false
 local_rank: 0
 logger:
@@ -36,7 +34,7 @@ model:
   cbf:
     name: spherical_harmonics
   cutoff: 5.0
-  direct_forces: true
+  direct_forces: false
   emb_size_atom: 256
   emb_size_bil_trip: 64
   emb_size_cbf: 16
@@ -69,7 +67,7 @@ optim:
   early_stopping_lr: 1.0e-06
   early_stopping_time: 604800
   ema_decay: 0.999
-  energy_coefficient: 1
+  energy_coefficient: 40
   eval_batch_size: 128
   factor: 0.8
   force_coefficient: 1000
@@ -86,6 +84,7 @@ optim:
     weight_decay: 2.0e-06
   patience: 5
   scheduler: ReduceLROnPlateau
+percentage: 0.1 # we don't actually read this config file in the code (we change a value that's coded in, this is a fix we should make). i'm putting this here for my own sanity
 print_every: 200
 run_dir: MODELPATH/
 seed: 0
