@@ -60,34 +60,14 @@ def get_atoms_from_simulation(path, traj_idx):
 
 if __name__ == "__main__":
     init_idx = int(sys.argv[1]) # init_idx
-    path_dt = f'/home/christine/mdsim/MODELPATH/maceoff_split_gemnet_dT_100k/md_25ps_123_init_{init_idx}'
-    path_calc = f'/home/christine/mdsim/MODELPATH/maceoff_split_gemnet_T_100k/md_25ps_123_init_{init_idx}'
-    with open('/home/christine/mdsim/md_scripts/records_gemnet_t_dt.txt', 'a') as f:
-        # traj[0]
-        atoms = get_atoms_from_simulation(path_dt, traj_idx=0)
+    path = f'/home/christine/mdsim/MODELPATH/spice_all_gemnet_t_maceoff_split_mine/md_25ps_123_init_{init_idx}'
+    with open('/home/christine/mdsim/md_scripts/records_gemnet_t_fulldataset.txt', 'a') as f:
+        
+        ### Only doing one model (gemnet-t) here since I have all the results for gemnet-dT on the full dataset in records_str_atoms_leq_6.txt
+        
+        atoms = get_atoms_from_simulation(path, traj_idx=0)
         f.write(f'molecule: {str(atoms.symbols)}\n')
         f.write(f'init_idx: {init_idx}\n\n')
-        f.write(f'GEMNET-DT CHECKPOINT\n')
-        calc = Psi4(atoms = atoms,
-            method = 'wB97M-D3BJ',
-            memory = '2GB',
-            basis = 'def2-TZVPPD')
-        atoms.calc = calc
-        pe_0 = atoms.get_potential_energy()
-        f.write(f'traj[0] potential energy: {pe_0}\n')
-            
-        # traj[-1]
-        atoms = get_atoms_from_simulation(path_dt, traj_idx=-1)
-        calc = Psi4(atoms = atoms,
-            method = 'wB97M-D3BJ',
-            memory = '2GB',
-            basis = 'def2-TZVPPD')
-        atoms.calc = calc
-        pe = atoms.get_potential_energy()
-        f.write(f'traj[-1] potential energy: {pe}\n')
-        f.write(f'energy is off by {(pe - pe_0)*1000} meV\n\n')
-        
-        atoms = get_atoms_from_simulation(path_calc, traj_idx=0)
         f.write(f'GEMNET-T CHECKPOINT\n')
         calc = Psi4(atoms = atoms,
             method = 'wB97M-D3BJ',
@@ -98,7 +78,7 @@ if __name__ == "__main__":
         f.write(f'traj[0] potential energy: {pe_0}\n')
             
         # traj[-1]
-        atoms = get_atoms_from_simulation(path_calc, traj_idx=-1)
+        atoms = get_atoms_from_simulation(path, traj_idx=-1)
         calc = Psi4(atoms = atoms,
             method = 'wB97M-D3BJ',
             memory = '2GB',
@@ -109,20 +89,3 @@ if __name__ == "__main__":
         f.write(f'energy is off by {(pe - pe_0)*1000} meV\n')
         f.write('---------------------------------------------------------\n')
     
-
-# md17 aspirin settings, with coupled cluster
-# calc = Psi4(atoms = atoms,
-#         method = 'ccsd',
-#         memory = '2GB',
-#         basis = 'cc-pvdz')
-
-# f.write('forces calculated by DFT:\n')
-# for i, row in enumerate(forces):
-#     if i != len(forces) - 1:
-#         if i == 0:
-#             f.write('[')
-#         formatted_row = ', '.join([f"{num:.8f}" for num in row])
-#         f.write(f"[{formatted_row}],\n")
-#     else:
-#         formatted_row = ', '.join([f"{num:.8f}" for num in row])
-#         f.write(f"[{formatted_row}]]\n")

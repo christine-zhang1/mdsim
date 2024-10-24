@@ -1,7 +1,7 @@
 trainer: trainer
 
 dataset:
-  src: /data/shared/MLFF/SPICE/maceoff_split/train
+  src: /data/shared/MLFF/SPICE/maceoff_split
   name: spice
   size: ""
   normalize_labels: False

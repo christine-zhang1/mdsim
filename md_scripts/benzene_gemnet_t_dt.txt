@@ -1,0 +1,15 @@
+these are both with trained on the full dataset
+i guess this is the one comparison you have between float32 and 64 for gemnet-dt
+molecule: C6H6
+init_idx: 8539
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -6324.019941526906
+traj[-1] potential energy: -6323.892772357365
+energy is off by 127.16916954104818 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -6324.019941526906
+traj[-1] potential energy: -6323.8474918100355
+energy is off by 172.44971687068755 meV
+---------------------------------------------------------

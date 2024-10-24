@@ -11,7 +11,7 @@ def parse_file_to_csv(input_file, output_csv):
     init_idx_pattern = re.compile(r'init_idx:\s+(\d+)')
 
     energy_pattern_gemnet = re.compile(r'GEMNET-DT CHECKPOINT\ntraj\[0\] potential energy: ([\-\d\.]+)\ntraj\[\-1\] potential energy: ([\-\d\.]+)\nenergy is off by ([\-\d\.]+) meV')
-    energy_pattern_maceoff = re.compile(r'MACEOFF CALCULATOR\ntraj\[0\] potential energy: ([\-\d\.]+)\ntraj\[\-1\] potential energy: ([\-\d\.]+)\nenergy is off by ([\-\d\.]+) meV')
+    energy_pattern_maceoff = re.compile(r'GEMNET-DT CHECKPOINT\ntraj\[0\] potential energy: ([\-\d\.]+)\ntraj\[\-1\] potential energy: ([\-\d\.]+)\nenergy is off by ([\-\d\.]+) meV')
 
     # Find all molecule sections and store the relevant information
     molecules = molecule_pattern.findall(data)
@@ -21,12 +21,12 @@ def parse_file_to_csv(input_file, output_csv):
 
     # Write the data to CSV
     with open(output_csv, 'w', newline='') as csvfile:
-        csvwriter = csv.writer(csvfile)
+        csvwriter = csv.writer(csvfile, delimiter='\t')
         # Write the header row
         csvwriter.writerow([
             'molecule', 'init_idx', 
-            'gemnet_traj0_energy', 'gemnet_trajN_energy', 'gemnet_energy_off_by_meV', 
-            'maceoff_traj0_energy', 'maceoff_trajN_energy', 'maceoff_energy_off_by_meV'
+            'gemnet_dT_traj0_energy', 'gemnet_dT_trajN_energy', 'gemnet_dT_energy_off_by_meV', 
+            'gemnet_T_traj0_energy', 'gemnet_T_trajN_energy', 'gemnet_T_energy_off_by_meV'
         ])
 
         # Write each row of data
@@ -38,8 +38,8 @@ def parse_file_to_csv(input_file, output_csv):
             ])
 
 # Define the input and output file paths
-input_file = 'records_str_atoms_leq_6.txt'  # Path to the input file you provided
-output_csv = 'records_str_atoms_leq_6.csv'  # Path where you want the CSV output
+input_file = 'records_gemnet_t_dt.txt'  # Path to the input file you provided
+output_csv = 'records_gemnet_t_dt.csv'  # Path where you want the CSV output
 
 # Run the function to convert the file
 parse_file_to_csv(input_file, output_csv)

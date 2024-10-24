@@ -669,6 +669,12 @@ class Trainer(ABC):
             val_metrics={k: val_metrics[k]["metric"] for k in val_metrics},
             test_metrics=test_metrics,
         )
+        
+    def convert_batch_to_double(self, batch):
+        for attr, value in batch:
+            if isinstance(value, torch.Tensor) and value.dtype == torch.float32:  # Only convert if it's a torch.Tensor
+                setattr(batch, attr, value.double())
+        return batch
 
     # Takes in a new data source and generates predictions on it.
     @torch.no_grad()
@@ -697,6 +703,8 @@ class Trainer(ABC):
         if self.ema:
             self.ema.store()
             self.ema.copy_to()
+            
+        self.model = self.model.double()
 
         if self.normalizers is not None:
             if not self.no_energy:
@@ -713,7 +721,7 @@ class Trainer(ABC):
             disable=disable_tqdm,
         ):
             with torch.cuda.amp.autocast(enabled=self.scaler is not None):
-                out = self._forward(batch_list)
+                out = self._forward([self.convert_batch_to_double(batch) for batch in batch_list])
 
             if self.normalizers is not None:
                 if not self.no_energy:
@@ -727,13 +735,13 @@ class Trainer(ABC):
                 systemids = [str(i) for i in batch_list[0].fid]
                 predictions["id"].extend(systemids)
                 predictions["energy"].extend(
-                    out["energy"].to(torch.float16).tolist()
+                    out["energy"].to(torch.float64).tolist()
                 )
                 batch_natoms = torch.cat(
                     [batch.natoms for batch in batch_list]
                 )
                 batch_fixed = torch.cat([batch.fixed for batch in batch_list])
-                forces = out["forces"].cpu().detach().to(torch.float16)
+                forces = out["forces"].cpu().detach().to(torch.float64)
                 per_image_forces = torch.split(forces, batch_natoms.tolist())
                 per_image_forces = [
                     force.numpy() for force in per_image_forces

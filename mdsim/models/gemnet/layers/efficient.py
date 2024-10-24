@@ -144,6 +144,7 @@ class EfficientInteractionBilinear(torch.nn.Module):
         """
         # num_spherical is actually num_spherical**2 for quadruplets
         (rbf_W1, sph) = basis
+        sph = sph.double()
         # (nEdges, emb_size_interm, num_spherical), (nEdges, num_spherical, Kmax)
         nEdges = rbf_W1.shape[0]
 

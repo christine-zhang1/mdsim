@@ -423,8 +423,15 @@ class GemNetT(torch.nn.Module):
                 f"sid={data.sid[empty_image]}, fid={data.fid[empty_image]}"
             )
         return edge_index, cell_offsets, neighbors, edge_dist, edge_vector
+    
+    def convert_batch_to_float(self, batch):
+        for attr, value in batch:
+            if isinstance(value, torch.Tensor) and value.dtype == torch.float64:  # Only convert if it's a torch.Tensor
+                setattr(batch, attr, value.float())
+        return batch
 
     def generate_interaction_graph(self, data):
+        data = self.convert_batch_to_float(data)
         num_atoms = data.atomic_numbers.size(0)
 
         if self.use_pbc:

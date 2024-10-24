@@ -1,0 +1,13 @@
+molecule: C16H24
+init_idx: 910
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -16994.965691294303
+traj[-1] potential energy: -16988.766528473123
+energy is off by 6199.162821179925 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -16994.965691294303
+traj[-1] potential energy: -16994.24701661239
+energy is off by 718.6746819133987 meV
+---------------------------------------------------------

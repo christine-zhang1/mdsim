@@ -12,6 +12,7 @@ seed: 123
 save_freq: 100
 steps: 50000
 max_test_points: 10000
+# no_evaluate: True
 # init_idx: 1950 # overridden in the command line
 
 # init_idx values:
