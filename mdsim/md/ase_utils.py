@@ -239,7 +239,7 @@ class Simulator:
                  restart=False,
                  save_frequency=100,
                  min_temp=0.1,
-                 max_temp=1000):
+                 max_temp=2000):
         self.atoms = atoms
         self.integrator = integrator
         self.save_dir = Path(save_dir)

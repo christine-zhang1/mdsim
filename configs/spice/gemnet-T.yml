@@ -12,7 +12,8 @@ dataset:
   normalize_labels: true
   return_formation_energy: true
   size: all
-  src: /data/shared/spice/maceoff_split
+  src: /data/shared/spice/maceoff_split # escher
+  # src: /data/shared/MLFF/SPICE/maceoff_split # germain
   # target_mean: -160.3177947998047
   # target_std: 1.0
 # - src: /data/shared/MLFF/SPICE/maceoff_split/test

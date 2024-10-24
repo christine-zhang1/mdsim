@@ -698,8 +698,15 @@ def radius_graph_pbc(data, radius, max_num_neighbors_threshold, topk_per_pair=No
         atom_count_sqr % num_atoms_per_image_expand
     ).long() + index_offset_expand
     # Get the positions for each atom
-    pos1 = torch.index_select(atom_pos, 0, index1)
-    pos2 = torch.index_select(atom_pos, 0, index2)
+    # atom_pos_cpu = atom_pos.cpu()
+    # index1 = index1.long()
+    # index2 = index2.long()
+    # pos1 = torch.index_select(atom_pos_cpu, 0, index1.cpu())
+    # pos2 = torch.index_select(atom_pos_cpu, 0, index2.cpu())
+    # pos1 = pos1.to(device)
+    # pos2 = pos2.to(device)
+    pos1 = torch.index_select(atom_pos, 0, index1.long())
+    pos2 = torch.index_select(atom_pos, 0, index2.long())
     
     unit_cell = torch.tensor(OFFSET_LIST, device=device).float()
     num_cells = len(unit_cell)

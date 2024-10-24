@@ -1,7 +1,8 @@
 trainer: trainer
 
 dataset:
-  src: /data/shared/spice/maceoff_split
+  src: /data/shared/spice/maceoff_split # escher
+  # src: /data/shared/MLFF/SPICE/maceoff_split # germain
   name: spice
   size: ""
   normalize_labels: False
