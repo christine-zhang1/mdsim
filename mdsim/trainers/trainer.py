@@ -226,7 +226,7 @@ class Trainer(ABC):
             print(yaml.dump(self.config, default_flow_style=False))
 
         self.load()
-        self.evaluator = Evaluator(task=name, no_energy=no_energy)
+        self.evaluator = Evaluator(task=name, no_energy=no_energy, use_curl=self.config["model_attributes"]["use_curl"])
 
     def load(self):
         self.load_seed_from_config()
@@ -513,6 +513,7 @@ class Trainer(ABC):
         self.loss_fn = {}
         self.loss_fn["energy"] = self.config["optim"].get("loss_energy", "mse")
         self.loss_fn["force"] = self.config["optim"].get("loss_force", "mse")
+        self.loss_fn["curl"] = self.config["optim"].get("loss_curl", "mse")
         for loss, loss_name in self.loss_fn.items():
             if loss_name in ["l1", "mae"]:
                 self.loss_fn[loss] = nn.L1Loss()
@@ -677,7 +678,7 @@ class Trainer(ABC):
         return batch
 
     # Takes in a new data source and generates predictions on it.
-    @torch.no_grad()
+    # @torch.no_grad()
     def predict(
         self,
         data_loader,
@@ -704,7 +705,7 @@ class Trainer(ABC):
             self.ema.store()
             self.ema.copy_to()
             
-        self.model = self.model.double()
+        # self.model = self.model.double()
 
         if self.normalizers is not None:
             if not self.no_energy:
@@ -721,7 +722,8 @@ class Trainer(ABC):
             disable=disable_tqdm,
         ):
             with torch.cuda.amp.autocast(enabled=self.scaler is not None):
-                out = self._forward([self.convert_batch_to_double(batch) for batch in batch_list])
+                # out = self._forward([self.convert_batch_to_double(batch) for batch in batch_list])
+                out = self._forward(batch_list)
 
             if self.normalizers is not None:
                 if not self.no_energy:
@@ -766,12 +768,12 @@ class Trainer(ABC):
                     per_image_forces = _per_image_free_forces
                     predictions["chunk_idx"].extend(_chunk_idx)
                 predictions["forces"].extend(per_image_forces)
-                break # only doing one batch right now
             else:
                 predictions["energy"] = out["energy"].detach()
                 predictions["forces"] = out["forces"].detach()
                 return predictions
 
+        breakpoint()
         predictions["forces"] = np.array(predictions["forces"])
         predictions["chunk_idx"] = np.array(predictions["chunk_idx"])
         predictions["energy"] = np.array(predictions["energy"])
@@ -795,6 +797,8 @@ class Trainer(ABC):
             "mae" in primary_metric
             and val_metrics[primary_metric]["metric"] < self.best_val_metric
         ) or (val_metrics[primary_metric]["metric"] > self.best_val_metric):
+            if distutils.is_master():
+                logging.info("Updating best checkpoint.")
             self.best_val_metric = val_metrics[primary_metric]["metric"]
             self.save(
                 metrics=val_metrics,
@@ -952,7 +956,7 @@ class Trainer(ABC):
         if self.config.get("test_dataset", False):
             self.test_dataset.close_db()
 
-    @torch.no_grad()
+    # @torch.no_grad()
     def validate(self, split="val", disable_tqdm=False, max_points=None):
         if distutils.is_master():
             logging.info(f"Evaluating on {split}.")
@@ -963,6 +967,8 @@ class Trainer(ABC):
         if self.ema:
             self.ema.store()
             self.ema.copy_to()
+
+        # self.model = self.model.double()
 
         evaluator, metrics = Evaluator(task=self.name), {}
         rank = distutils.get_rank()
@@ -979,6 +985,7 @@ class Trainer(ABC):
             disable=disable_tqdm,
             total=np.ceil(max_points // batch_size)
         ):
+            # batch = [self.convert_batch_to_double(b) for b in batch]
             # Forward.
             with torch.cuda.amp.autocast(enabled=self.scaler is not None):
                 out = self._forward(batch)
@@ -1027,7 +1034,9 @@ class Trainer(ABC):
 
     def _forward(self, batch_list):
         # forward pass.
-        if self.config["model_attributes"].get("regress_forces", True):
+        if self.config["model_attributes"].get("use_curl", False):
+            out_energy, out_forces, out_curl = self.model(batch_list)
+        elif self.config["model_attributes"].get("regress_forces", True):
             out_energy, out_forces = self.model(batch_list)
         else:
             out_energy = self.model(batch_list)
@@ -1041,6 +1050,9 @@ class Trainer(ABC):
 
         if self.config["model_attributes"].get("regress_forces", True):
             out["forces"] = out_forces  
+            
+        if self.config["model_attributes"].get("use_curl", True):
+            out["curl"] = out_curl
         
         return out
 
@@ -1050,7 +1062,8 @@ class Trainer(ABC):
         # Energy loss.
         if not self.no_energy:
             energy_target = torch.cat(
-                [batch.y.to(self.device) for batch in batch_list], dim=0
+                [batch.reference_energy.to(self.device) for batch in batch_list], dim=0
+                # [batch.y.to(self.device) for batch in batch_list], dim=0
             )
             if self.normalizer.get("normalize_labels", False):
                 energy_target = self.normalizers["target"].norm(energy_target)
@@ -1122,6 +1135,14 @@ class Trainer(ABC):
                         force_mult
                         * self.loss_fn["force"](out["forces"], force_target)
                     )
+        
+        if self.config["model_attributes"].get("use_curl", False):
+            curl_target = torch.cat(
+                [torch.zeros(torch.max(batch.batch) + 1).to(self.device) for batch in batch_list], dim=0  # zeros tensor of shape [batch_size]
+            )
+            curl_mult = self.config["optim"].get("curl_coefficient", 1)
+            loss.append(curl_mult * self.loss_fn["curl"](out["curl"], curl_target))
+            
         # Sanity check to make sure the compute graph is correct.
         for lc in loss:
             assert hasattr(lc, "grad_fn")           
@@ -1142,7 +1163,13 @@ class Trainer(ABC):
         
         if not self.no_energy:
             target.update({
-                "energy": torch.cat([batch.y.to(self.device) for batch in batch_list], dim=0)
+                "energy": torch.cat([batch.reference_energy.to(self.device) for batch in batch_list], dim=0)
+                # "energy": torch.cat([batch.y.to(self.device) for batch in batch_list], dim=0)
+            })
+            
+        if self.config["model_attributes"].get("use_curl", False):
+            target.update({
+                "curl": torch.cat([torch.zeros(torch.max(batch.batch) + 1).to(self.device) for batch in batch_list], dim=0)
             })
 
         out["natoms"] = natoms

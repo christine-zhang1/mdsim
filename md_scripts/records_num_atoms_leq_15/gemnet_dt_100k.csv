@@ -1,0 +1,2 @@
+molecule,init_idx,traj[0] potential energy,traj[0] kinetic energy,traj[-1] potential energy,traj[-1] kinetic energy,total energy deviation (meV)
+OCNC3H9,193,-7837.547613881598,0.7666681504913424,-7836.837476957494,1.9480799101950483,1891.5486838079676

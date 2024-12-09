@@ -73,7 +73,8 @@ class MultiMoleculeDataset(Dataset):
 
         logging.info(f"Calculating mean and std for datasets...")
         for dataset in self.lmbd_datasets:
-            dataset.calculate_mean_std_energy()
+            # dataset.calculate_mean_std_energy()
+            dataset.get_spice_mean_std()
 
         # Avoid carbon idx if we are using the bucky ball catcher spice as the val.
         self.bucky_high_fidelity_val = (len(self.lmbd_datasets) == 1 and len(self.lmbd_datasets[0]) < 20)

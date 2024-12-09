@@ -6,12 +6,12 @@ while IFS=' ' read -r number molecule; do
     # Use the number as a parameter
     echo "Processing number: $number"
     # run simulation
-    CUDA_VISIBLE_DEVICES=2,3 python simulate.py --config_yml configs/simulate/spice_dt.yml --model_dir MODELPATH/maceoff_split_gemnet_dT_results --init_idx $number
+    CUDA_VISIBLE_DEVICES=0 python simulate.py --config_yml configs/simulate/spice_dt.yml --model_dir MODELPATH/maceoff_split_gemnet_dT_results --init_idx $number
 
     # check if simulation ran to completion
     line_count1=$(wc -l < "MODELPATH/maceoff_split_gemnet_dT_results/md_25ps_123_init_$number/thermo.log")
     if [ "$line_count1" -gt 500 ]; then
-        CUDA_VISIBLE_DEVICES=2,3 python simulate.py --config_yml configs/simulate/spice_calc.yml --model_dir MODELPATH/maceoff_split_gemnet_dT_results --init_idx $number
+        CUDA_VISIBLE_DEVICES=0 python simulate.py --config_yml configs/simulate/spice_calc.yml --model_dir MODELPATH/maceoff_split_gemnet_dT_results --init_idx $number
         line_count2=$(wc -l < "MODELPATH/maceoff_split_gemnet_dT_results/md_25ps_maceoff_calc_123_init_$number/thermo.log")
         if [ "$line_count2" -gt 500 ]; then
             python md_scripts/psi4_testing.py $number

@@ -124,6 +124,7 @@ class GemNetT(torch.nn.Module):
         direct_forces: bool = False,
         cutoff: float = 6.0,
         max_neighbors: int = 50,
+        use_curl: bool = False,
         rbf: dict = {"name": "gaussian"},
         envelope: dict = {"name": "polynomial", "exponent": 5},
         cbf: dict = {"name": "spherical_harmonics"},
@@ -149,6 +150,7 @@ class GemNetT(torch.nn.Module):
         self.regress_forces = regress_forces
         self.otf_graph = otf_graph
         self.use_pbc = use_pbc
+        self.use_curl = use_curl
 
         AutomaticFit.reset()  # make sure that queue is empty (avoid potential error)
 
@@ -536,6 +538,7 @@ class GemNetT(torch.nn.Module):
         pos = data.pos
         batch = data.batch
         atomic_numbers = data.atomic_numbers.long()
+        rand_atom = 0
 
         # # hardcoding to make pos be new positions of the first atom in a square to calculate how conservative the force is
         # with open("mdsim/custom_force_pred/points_on_square_left.txt") as data_file:
@@ -550,7 +553,8 @@ class GemNetT(torch.nn.Module):
         #     for j in range(1, 21):
         #         pos[i*21+j] = pos[j]
 
-        if self.regress_forces and not self.direct_forces:
+        if self.regress_forces: # and not self.direct_forces:
+            # commented out the second half of if statement for testing curl stuff
             pos.requires_grad_(True)
 
         (
@@ -647,7 +651,55 @@ class GemNetT(torch.nn.Module):
                     )[0]
                     # (nAtoms, 3)
 
-            return E_t, F_t  # (nMolecules, num_targets), (nAtoms, 3)
+            if self.use_curl:
+                ### Approach for single atom of single molecule curl ###
+                # J_i = []
+                # for k in range(3):  # Iterate over x, y, z components of force
+                #     grad_outputs = torch.zeros_like(F_t)  # Shape: [N, 3]
+                #     grad_outputs[rand_atom, k] = 1.0  # Focus on F[rand_atom, k]
+                #     grad_pos = torch.autograd.grad(F_t, pos, grad_outputs=grad_outputs, retain_graph=True)[0]
+                #     J_i.append(grad_pos[rand_atom])  # Only the gradient w.r.t. pos[i]
+
+                # # Stack to form the 3x3 Jacobian
+                # J_i = torch.stack(J_i)  # Shape: [3, 3]
+                # J_new = J_i - J_i.T
+                # curl_vec = torch.tensor([J_new[2, 1], J_new[1, 0], J_new[0, 2]])
+                # curl_norm = torch.norm(curl_vec)
+                
+                ### Batched approach ###
+                batch_size = torch.bincount(batch)  # Number of rows per batch
+                start_indices = torch.cumsum(torch.cat([torch.tensor([0], device=pos.device), batch_size[:-1]]), dim=0)  # Start indices for each batch
+                random_offsets = torch.randint(0, batch_size.max(), (nMolecules,)).to(pos.device) % batch_size  # Random offsets for each batch
+                selected_indices = start_indices + random_offsets  # Shape: [B]
+                grad_outputs = torch.zeros_like(F_t)
+                
+                jacobians_list = []
+                for i in range(3):  # Iterate over components (Fx, Fy, Fz)
+                    # Set grad_outputs to select only the i-th component for all selected indices
+                    grad_outputs.zero_()  # Reset grad_outputs
+                    grad_outputs[selected_indices, i] = 1.0  # Select i-th component for the Jacobian
+
+                    # Compute gradient w.r.t. positions
+                    grad_pos = torch.autograd.grad(
+                        outputs=F_t,
+                        inputs=pos,
+                        grad_outputs=grad_outputs,
+                        retain_graph=True
+                    )[0]
+
+                    # Extract gradients for selected rows
+                    jacobian_i = grad_pos[selected_indices]  # Shape: [B, 3]
+                    jacobians_list.append(jacobian_i)
+
+                # Stack component gradients to form the Jacobians
+                jacobians = torch.stack(jacobians_list, dim=-1)  # Shape: [B, 3, 3]
+                J_new = jacobians - jacobians.transpose(1, 2)  # Subtract transpose from itself (don't transpose the batch dimension)
+                curl_vec = torch.stack([J_new[:, 2, 1], J_new[:, 1, 0], J_new[:, 0, 2]], dim=-1)
+                curl_norm = torch.norm(curl_vec, dim=-1)
+                
+                return E_t, F_t, curl_norm
+            else:
+                return E_t, F_t  # (nMolecules, num_targets), (nAtoms, 3)
         else:
             return E_t
 

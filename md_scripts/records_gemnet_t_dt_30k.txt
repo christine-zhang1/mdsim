@@ -11,3 +11,315 @@ traj[0] potential energy: -16994.965691294303
 traj[-1] potential energy: -16994.24701661239
 energy is off by 718.6746819133987 meV
 ---------------------------------------------------------
+molecule: F2C6H4
+init_idx: 2014
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -11727.457120211024
+traj[-1] potential energy: -11727.603197879354
+energy is off by -146.07766833069036 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -11727.457120211024
+traj[-1] potential energy: -11727.69504452572
+energy is off by -237.92431469701114 meV
+---------------------------------------------------------
+molecule: NC5H5
+init_idx: 2060
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -6759.768363038055
+traj[-1] potential energy: -6760.209035582226
+energy is off by -440.67254417041113 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -6759.768363038055
+traj[-1] potential energy: -6760.129123912825
+energy is off by -360.7608747697668 meV
+---------------------------------------------------------
+molecule: O2C9H6
+init_idx: 2513
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -13531.945919702794
+traj[-1] potential energy: -13531.469795743342
+energy is off by 476.1239594517974 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -13531.945919702794
+traj[-1] potential energy: -13531.723544622191
+energy is off by 222.37508060243272 meV
+---------------------------------------------------------
+molecule: N2F4C8
+init_idx: 2886
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -22155.20406908426
+traj[-1] potential energy: -22155.137717074365
+energy is off by 66.3520098933077 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -22155.20406908426
+traj[-1] potential energy: -22155.040464200898
+energy is off by 163.60488336067647 meV
+---------------------------------------------------------
+molecule: F8C12
+init_idx: 3307
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -34197.626718105166
+traj[-1] potential energy: -34196.68590564379
+energy is off by 940.8124613764812 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -34197.626718105166
+traj[-1] potential energy: -34197.4159910778
+energy is off by 210.7270273627364 meV
+---------------------------------------------------------
+molecule: C2H2
+init_idx: 3573
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -2105.567380200731
+traj[-1] potential energy: -2105.5487821565994
+energy is off by 18.59804413152233 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -2105.567380200731
+traj[-1] potential energy: -2105.625420649206
+energy is off by -58.04044847491241 meV
+---------------------------------------------------------
+molecule: Cl2CH2
+init_idx: 6202
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -26119.02972957803
+traj[-1] potential energy: -26119.03345615935
+energy is off by -3.726581322553102 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -26119.02972957803
+traj[-1] potential energy: -26119.026098449773
+energy is off by 3.631128256529337 meV
+---------------------------------------------------------
+molecule: Cl6C6
+init_idx: 7738
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -81372.20816708777
+traj[-1] potential energy: -81372.08197869574
+energy is off by 126.1883920233231 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -81372.20816708777
+traj[-1] potential energy: -81372.00317776269
+energy is off by 204.98932508053258 meV
+---------------------------------------------------------
+molecule: C6H6
+init_idx: 8539
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -6324.019941526906
+traj[-1] potential energy: -6323.766830538224
+energy is off by 253.1109886822378 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -6324.019941526906
+traj[-1] potential energy: -6323.840617536537
+energy is off by 179.32399036908464 meV
+---------------------------------------------------------
+molecule: C4H6
+init_idx: 9102
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -4247.072829969585
+traj[-1] potential energy: -4246.715909477233
+energy is off by 356.9204923514917 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -4247.072829969585
+traj[-1] potential energy: -4246.837824256077
+energy is off by 235.00571350814425 meV
+---------------------------------------------------------
+molecule: BrC6H5
+init_idx: 9803
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -76353.62095050143
+traj[-1] potential energy: -76353.74914651371
+energy is off by -128.196012286935 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -76353.62095050143
+traj[-1] potential energy: -76353.7683887281
+energy is off by -147.43822667514905 meV
+---------------------------------------------------------
+molecule: FC6H5
+init_idx: 10844
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -9025.986080095898
+traj[-1] potential energy: -9025.8316384547
+energy is off by 154.44164119799098 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -9025.986080095898
+traj[-1] potential energy: -9025.817721215031
+energy is off by 168.35888086643536 meV
+---------------------------------------------------------
+molecule: F3C6H3
+init_idx: 10924
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -14430.201844521327
+traj[-1] potential energy: -14430.073795792234
+energy is off by 128.0487290932797 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -14430.201844521327
+traj[-1] potential energy: -14430.204186778199
+energy is off by -2.342256871997961 meV
+---------------------------------------------------------
+molecule: F4I2C6
+init_idx: 12131
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -33304.85667527489
+traj[-1] potential energy: -33303.93184703647
+energy is off by 924.828238421469 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -33304.85667527489
+traj[-1] potential energy: -33305.133309253026
+energy is off by -276.6339781373972 meV
+---------------------------------------------------------
+molecule: C3H8
+init_idx: 14747
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -3243.803194833781
+traj[-1] potential energy: -3243.546296063726
+energy is off by 256.8987700551588 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -3243.803194833781
+traj[-1] potential energy: -3243.648165828779
+energy is off by 155.02900500223404 meV
+---------------------------------------------------------
+molecule: C4NH5
+init_idx: 15094
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -5722.848494094277
+traj[-1] potential energy: -5722.57966501058
+energy is off by 268.8290836968008 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -5722.848494094277
+traj[-1] potential energy: -5722.769565282695
+energy is off by 78.92881158204545 meV
+---------------------------------------------------------
+molecule: F6C6
+init_idx: 19508
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -22534.756342070123
+traj[-1] potential energy: -22534.704288312572
+energy is off by 52.053757550311275 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -22534.756342070123
+traj[-1] potential energy: -22534.99227884295
+energy is off by -235.93677282769931 meV
+---------------------------------------------------------
+molecule: C16H12
+init_idx: 24024
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -16796.9511117128
+traj[-1] potential energy: -16796.291570368736
+energy is off by 659.5413440627453 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -16796.9511117128
+traj[-1] potential energy: -16796.57882900109
+energy is off by 372.2827117089764 meV
+---------------------------------------------------------
+molecule: ClC6H5
+init_idx: 27561
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -18832.067254667494
+traj[-1] potential energy: -18831.949657206173
+energy is off by 117.59746132156579 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -18832.067254667494
+traj[-1] potential energy: -18831.857400675017
+energy is off by 209.8539924772922 meV
+---------------------------------------------------------
+molecule: OC12H8
+init_idx: 30676
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -14629.973355715734
+traj[-1] potential energy: -14628.328591374213
+energy is off by 1644.7643415212951 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -14629.973355715734
+traj[-1] potential energy: -14629.801882334361
+energy is off by 171.47338137328916 meV
+---------------------------------------------------------
+molecule: Br4C2
+init_idx: 37758
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -282259.8675981438
+traj[-1] potential energy: -282258.8213471299
+energy is off by 1046.2510139332153 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -282259.8675981438
+traj[-1] potential energy: -282259.8641182545
+energy is off by 3.4798893029801548 meV
+---------------------------------------------------------
+molecule: C2H4
+init_idx: 39719
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -2139.504482252323
+traj[-1] potential energy: -2139.67700334154
+energy is off by -172.5210892168434 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -2139.504482252323
+traj[-1] potential energy: -2139.69572167885
+energy is off by -191.2394265268631 meV
+---------------------------------------------------------
+molecule: NC13H7
+init_idx: 43011
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -15094.45355881448
+traj[-1] potential energy: -15094.12171151868
+energy is off by 331.84729580170824 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -15094.45355881448
+traj[-1] potential energy: -15094.35995120865
+energy is off by 93.60760583149386 meV
+---------------------------------------------------------
+molecule: Cl5C6H
+init_idx: 49489
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -68863.76618362768
+traj[-1] potential energy: -68863.8596740583
+energy is off by -93.49043061956763 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -68863.76618362768
+traj[-1] potential energy: -68863.8400285864
+energy is off by -73.84495872247498 meV
+---------------------------------------------------------

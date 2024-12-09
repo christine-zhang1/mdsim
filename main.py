@@ -39,7 +39,7 @@ class Runner(submitit.helpers.Checkpointable):
             config['dataset'] = [
                 train_data_cfg,
                 {'src': os.path.join(os.path.dirname(train_data_cfg['src']), 'val')},
-                {'src': os.path.join(os.path.dirname(train_data_cfg['src']), 'test')}
+                # {'src': os.path.join(os.path.dirname(train_data_cfg['src']), 'test')}
             ]
             
             self.config = copy.deepcopy(config)

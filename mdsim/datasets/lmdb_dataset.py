@@ -209,6 +209,11 @@ class LmdbDataset(Dataset):
         # mean = torch.mean(energies)
         # std = torch.std(energies)
 
+    def get_spice_mean_std(self):
+        self.mean = -140.80356519035792
+        self.std = 1.0
+        self.mean_f = 0.0
+        self.std_f = 1.0757999822144813
 
 def data_list_collater(data_list, otf_graph=False):
     batch = Batch.from_data_list(data_list)

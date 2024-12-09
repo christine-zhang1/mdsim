@@ -1,7 +1,7 @@
 includes:
 - configs/spice/base.yml
 
-identifier: dT
+identifier: dT_curl_140
 
 model:
   name: gemnet_t
@@ -34,10 +34,11 @@ model:
   otf_graph: True
   regress_forces: True
   direct_forces: True
+  use_curl: True
 
 optim:
-  batch_size: 1
-  eval_batch_size: 1
+  batch_size: 128
+  eval_batch_size: 128
   num_workers: 4
   lr_initial: 0.001
   optimizer: AdamW
@@ -51,7 +52,9 @@ optim:
   max_epochs: 10000
   force_coefficient: 1000
   energy_coefficient: 1
+  curl_coefficient: 1
   ema_decay: 0.999
   clip_grad_norm: 10
   loss_energy: mae
   loss_force: l2mae
+  loss_curl: l2mae

@@ -42,16 +42,20 @@ class Evaluator:
         "s2ef": "forces_mae"
     }
 
-    def __init__(self, task=None, no_energy=False):
+    def __init__(self, task=None, no_energy=False, use_curl=False):
         assert task in ["s2ef"]
         self.task = task
         self.metric_fn = self.task_metrics[task]
         self.no_energy = no_energy
+        self.use_curl = use_curl
         if self.no_energy:
             if 'energy' in self.task_attributes[self.task]:
                 self.task_attributes[self.task].remove("energy")
                 self.task_metrics[self.task].remove("energy_rmse")
-                self.task_metrics[self.task].remove("energy_mae")         
+                self.task_metrics[self.task].remove("energy_mae")
+        if self.use_curl:
+            self.task_attributes[self.task].append("curl")
+            self.task_metrics[self.task].append("curl_mae")
             
     def eval(self, prediction, target, prev_metrics={}):
         for attr in self.task_attributes[self.task]:
@@ -152,6 +156,9 @@ def positions_mae(prediction, target):
 
 def positions_mse(prediction, target):
     return squared_error(prediction["positions"], target["positions"])
+
+def curl_mae(prediction, target):
+    return absolute_error(prediction["curl"], target["curl"])
 
 
 def energy_force_within_threshold(prediction, target):

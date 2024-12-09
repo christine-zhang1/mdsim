@@ -3,8 +3,8 @@ trainer: trainer
 dataset:
   src: /data/shared/MLFF/SPICE/maceoff_split
   name: spice
-  size: ""
-  normalize_labels: False
+  size: all
+  normalize_labels: True
 
 logger: 
   name: wandb

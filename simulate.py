@@ -60,8 +60,9 @@ def eval_and_init(config):
         if config['no_evaluate']:
             test_metrics = {}
         else:
-            test_metrics = {}
-            # test_metrics = calculator.trainer.validate('test', max_points=config["max_test_points"])
+            # test_metrics = {}
+            test_metrics = calculator.trainer.validate('test', max_points=config["max_test_points"])
+            # test_metrics = calculator.trainer.validate('test')
         test_metrics['num_params'] = sum(p.numel() for p in calculator.trainer.model.parameters())
     elif config['sim_type'] == 'dp':
         # deploy model.
@@ -182,7 +183,7 @@ def simulate(config, calculator, test_metrics):
                    atoms=atoms,
                    kT=1.0))
     else:
-        atoms.set_calculator(calculator)
+        atoms.calc = calculator
     
     # adjust units.
     config["integrator_config"]["timestep"] *= units.fs

@@ -438,10 +438,14 @@ def compose_data_cfg(data_cfg):
         data_cfg['grad_target_std'] = 1.
         data_cfg['normalize_labels'] = True
     else:
-        data_cfg['target_mean'] = float(norm_stats['e_mean'])
-        data_cfg['target_std'] = float(norm_stats['e_std'])
-        data_cfg['grad_target_mean'] = float(norm_stats['f_mean'])
-        data_cfg['grad_target_std'] = float(norm_stats['f_std'])
+        # data_cfg['target_mean'] = float(norm_stats['e_mean'])
+        # data_cfg['target_std'] = float(norm_stats['e_std'])
+        # data_cfg['grad_target_mean'] = float(norm_stats['f_mean'])
+        # data_cfg['grad_target_std'] = float(norm_stats['f_std'])
+        data_cfg['target_std'] = 1.0
+        data_cfg['target_mean'] = -140.80356519035792
+        data_cfg['grad_target_mean'] = 0.0
+        data_cfg['grad_target_std'] = 1.0757999822144813
     # train, val, test
     return data_cfg
 

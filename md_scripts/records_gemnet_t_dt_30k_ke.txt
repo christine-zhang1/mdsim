@@ -1,0 +1,325 @@
+molecule: C16H24
+init_idx: 910
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 1.7216599076617813
+traj[-1] kinetic energy: 8.217066746019597
+energy is off by 6495.406838357816 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 1.7216599076617813
+traj[-1] kinetic energy: 1.0130847478911116
+energy is off by -708.5751597706698 meV
+---------------------------------------------------------
+molecule: F2C6H4
+init_idx: 2014
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409702
+traj[-1] kinetic energy: 1.3300651748607693
+energy is off by 735.225949619799 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409702
+traj[-1] kinetic energy: 0.8316080177019717
+energy is off by 236.76879246100145 meV
+---------------------------------------------------------
+molecule: NC5H5
+init_idx: 2060
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.5422428000137464
+traj[-1] kinetic energy: 1.0550893350493293
+energy is off by 512.846535035583 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.5422428000137464
+traj[-1] kinetic energy: 0.9055855395318049
+energy is off by 363.3427395180585 meV
+---------------------------------------------------------
+molecule: O2C9H6
+init_idx: 2513
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.8418674768714295
+traj[-1] kinetic energy: 2.911262850115015
+energy is off by 2069.3953732435853 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.8418674768714295
+traj[-1] kinetic energy: 0.6126236100704163
+energy is off by -229.24386680101316 meV
+---------------------------------------------------------
+molecule: N2F4C8
+init_idx: 2886
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.6764882889325236
+traj[-1] kinetic energy: 0.7487795564866404
+energy is off by 72.29126755411686 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.6764882889325236
+traj[-1] kinetic energy: 0.5141477190743038
+energy is off by -162.34056985821977 meV
+---------------------------------------------------------
+molecule: F8C12
+init_idx: 3307
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.875715872304364
+traj[-1] kinetic energy: 2.3133275776407904
+energy is off by 1437.6117053364267 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.875715872304364
+traj[-1] kinetic energy: 0.6716765740651667
+energy is off by -204.0392982391973 meV
+---------------------------------------------------------
+molecule: C2H2
+init_idx: 3573
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.21889997587532573
+traj[-1] kinetic energy: 0.20880107663853906
+energy is off by -10.098899236786668 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.21889997587532573
+traj[-1] kinetic energy: 0.26410826336923665
+energy is off by 45.20828749391092 meV
+---------------------------------------------------------
+molecule: Cl2CH2
+init_idx: 6202
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.22912440985892563
+traj[-1] kinetic energy: 0.21933739982686484
+energy is off by -9.787010032060783 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.22912440985892563
+traj[-1] kinetic energy: 0.2283819765765482
+energy is off by -0.7424332823774138 meV
+---------------------------------------------------------
+molecule: Cl6C6
+init_idx: 7738
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409702
+traj[-1] kinetic energy: 0.4854546308497291
+energy is off by -109.3845943912411 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409702
+traj[-1] kinetic energy: 0.38908443543782406
+energy is off by -205.75478980314617 meV
+---------------------------------------------------------
+molecule: C6H6
+init_idx: 8539
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409702
+traj[-1] kinetic energy: 0.35632640470886523
+energy is off by -238.512820532105 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409702
+traj[-1] kinetic energy: 0.4171298461110855
+energy is off by -177.70937912988472 meV
+---------------------------------------------------------
+molecule: C4H6
+init_idx: 9102
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.5298961588765397
+traj[-1] kinetic energy: 0.7825225057559857
+energy is off by 252.62634687944598 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.5298961588765397
+traj[-1] kinetic energy: 0.29881556393246017
+energy is off by -231.08059494407956 meV
+---------------------------------------------------------
+molecule: BrC6H5
+init_idx: 9803
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409702
+traj[-1] kinetic energy: 0.8286098710411856
+energy is off by 233.77064580021533 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409702
+traj[-1] kinetic energy: 0.7406484978687717
+energy is off by 145.80927262780153 meV
+---------------------------------------------------------
+molecule: FC6H5
+init_idx: 10844
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409702
+traj[-1] kinetic energy: 1.075505515018132
+energy is off by 480.66628977716186 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409702
+traj[-1] kinetic energy: 0.4261320250332601
+energy is off by -168.70720020771012 meV
+---------------------------------------------------------
+molecule: F3C6H3
+init_idx: 10924
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409702
+traj[-1] kinetic energy: 0.42426983910456895
+energy is off by -170.56938613640128 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409702
+traj[-1] kinetic energy: 0.5944561247062072
+energy is off by -0.3831005347629812 meV
+---------------------------------------------------------
+molecule: F4I2C6
+init_idx: 12131
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409703
+traj[-1] kinetic energy: 1.4383535180251557
+energy is off by 843.5142927841853 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409703
+traj[-1] kinetic energy: 0.8772606347030826
+energy is off by 282.42140946211225 meV
+---------------------------------------------------------
+molecule: C3H8
+init_idx: 14747
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.5422428000137464
+traj[-1] kinetic energy: 0.81469220615687
+energy is off by 272.4494061431236 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.5422428000137464
+traj[-1] kinetic energy: 0.3862400033612964
+energy is off by -156.00279665244997 meV
+---------------------------------------------------------
+molecule: C4NH5
+init_idx: 15094
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.5298961588765397
+traj[-1] kinetic energy: 0.92924129520671
+energy is off by 399.3451363301702 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.5298961588765397
+traj[-1] kinetic energy: 0.4536415018823301
+energy is off by -76.25465699420964 meV
+---------------------------------------------------------
+molecule: F6C6
+init_idx: 19508
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409703
+traj[-1] kinetic energy: 0.8535310102788147
+energy is off by 258.6917850378444 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409703
+traj[-1] kinetic energy: 0.8284101870729025
+energy is off by 233.57096183193215 meV
+---------------------------------------------------------
+molecule: C16H12
+init_idx: 24024
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 1.109092853854642
+traj[-1] kinetic energy: 2.8179402318686306
+energy is off by 1708.8473780139886 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 1.109092853854642
+traj[-1] kinetic energy: 0.7454992671315082
+energy is off by -363.5935867231339 meV
+---------------------------------------------------------
+molecule: ClC6H5
+init_idx: 27561
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409702
+traj[-1] kinetic energy: 0.4933252189607943
+energy is off by -101.51400628017593 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409702
+traj[-1] kinetic energy: 0.3849632366621441
+energy is off by -209.8759885788261 meV
+---------------------------------------------------------
+molecule: OC12H8
+init_idx: 30676
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.8917788570528707
+traj[-1] kinetic energy: 2.6264856621652886
+energy is off by 1734.7068051124177 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.8917788570528707
+traj[-1] kinetic energy: 0.7251413639959925
+energy is off by -166.63749305687824 meV
+---------------------------------------------------------
+molecule: Br4C2
+init_idx: 37758
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.2599619669901469
+traj[-1] kinetic energy: 0.48682110374687887
+energy is off by 226.85913675673197 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.2599619669901469
+traj[-1] kinetic energy: 0.2613992268452437
+energy is off by 1.4372598550967952 meV
+---------------------------------------------------------
+molecule: C2H4
+init_idx: 39719
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.25996196699014695
+traj[-1] kinetic energy: 0.2542372133803899
+energy is off by -5.72475360975705 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.25996196699014695
+traj[-1] kinetic energy: 0.44688316156982616
+energy is off by 186.9211945796792 meV
+---------------------------------------------------------
+molecule: NC13H7
+init_idx: 43011
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.8917788570528707
+traj[-1] kinetic energy: 1.9088273717451854
+energy is off by 1017.0485146923145 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.8917788570528707
+traj[-1] kinetic energy: 0.8192653022292677
+energy is off by -72.513554823603 meV
+---------------------------------------------------------
+molecule: Cl5C6H
+init_idx: 49489
+
+GEMNET-DT CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409702
+traj[-1] kinetic energy: 0.8751150555495875
+energy is off by 280.27583030861723 meV
+
+GEMNET-T CHECKPOINT
+traj[0] kinetic energy: 0.5948392252409702
+traj[-1] kinetic energy: 0.6705782686638959
+energy is off by 75.7390434229257 meV
+---------------------------------------------------------

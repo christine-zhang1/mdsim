@@ -1,4 +1,4 @@
-molecule: CH4OH2 (seemed to start at 2 molecules initially)
+molecule: CH4OH2
 init_idx: 491
 
 GEMNET-DT CHECKPOINT
@@ -11,7 +11,7 @@ traj[0] potential energy: -3184.1470310569507
 traj[-1] potential energy: -3184.119548147045
 energy is off by 27.48290990575697 meV
 ---------------------------------------------------------
-molecule: C20H24 (checked this is stable for both)
+molecule: C20H24
 init_idx: 954
 
 GEMNET-DT CHECKPOINT
@@ -24,7 +24,7 @@ traj[0] potential energy: -21139.49714283003
 traj[-1] potential energy: -21138.854166041816
 energy is off by 642.9767882145825 meV
 ---------------------------------------------------------
-molecule: Cl8C10 (checked this is stable for both)
+molecule: Cl8C10
 init_idx: 1211
 
 GEMNET-DT CHECKPOINT
@@ -271,11 +271,6 @@ traj[0] potential energy: -26119.02972957803
 traj[-1] potential energy: -26119.053184445584
 energy is off by -23.454867554391967 meV
 ---------------------------------------------------------
-molecule: C4H12
-init_idx: 6250
-
-GEMNET-DT CHECKPOINT
-traj[0] potential energy: -4346.217523843913
 molecule: F6N2C8
 init_idx: 6417
 
@@ -730,4 +725,30 @@ GEMNET-T CHECKPOINT
 traj[0] potential energy: -11576.67492795353
 traj[-1] potential energy: -11576.662262822692
 energy is off by 12.665130838286132 meV
+---------------------------------------------------------
+molecule: C22H16
+init_idx: 44700
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -23088.4184232457
+traj[-1] potential energy: -23088.192402210494
+energy is off by 226.02103520694072 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -23088.4184232457
+traj[-1] potential energy: -23088.905337205444
+energy is off by -486.9139597431058 meV
+---------------------------------------------------------
+molecule: Cl5C6H
+init_idx: 49489
+
+GEMNET-DT CHECKPOINT
+traj[0] potential energy: -68863.76618362768
+traj[-1] potential energy: -68863.66182837164
+energy is off by 104.35525604407303 meV
+
+GEMNET-T CHECKPOINT
+traj[0] potential energy: -68863.76618362768
+traj[-1] potential energy: -68863.88286101977
+energy is off by -116.67739208496641 meV
 ---------------------------------------------------------
