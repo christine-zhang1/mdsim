@@ -63,6 +63,7 @@ class WandBLogger(Logger):
             dir=self.config["cmd"]["logs_dir"],
             project=project,
             resume="allow",
+            id='lj6w5zem'
         )
 
     def watch(self, model):

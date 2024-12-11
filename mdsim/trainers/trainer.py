@@ -226,7 +226,7 @@ class Trainer(ABC):
             print(yaml.dump(self.config, default_flow_style=False))
 
         self.load()
-        self.evaluator = Evaluator(task=name, no_energy=no_energy, use_curl=self.config["model_attributes"]["use_curl"])
+        self.evaluator = Evaluator(task=name, no_energy=no_energy, use_curl=self.config["model_attributes"].get("use_curl", False))
 
     def load(self):
         self.load_seed_from_config()
@@ -1051,7 +1051,7 @@ class Trainer(ABC):
         if self.config["model_attributes"].get("regress_forces", True):
             out["forces"] = out_forces  
             
-        if self.config["model_attributes"].get("use_curl", True):
+        if self.config["model_attributes"].get("use_curl", False):
             out["curl"] = out_curl
         
         return out
