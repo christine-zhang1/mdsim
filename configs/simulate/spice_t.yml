@@ -2,15 +2,16 @@ model_dir: MODELPATH
 # dataset_src: /data/shared/MLFF/SPICE/maceoff_split/test
 # dp_data_path: /data/shared/MLFF/SPICE/maceoff_split/test
 
-dataset_src:  /data/shared/MLFF/SPICE/maceoff_split/test
+# dataset_src:  /data/shared/MLFF/SPICE/maceoff_split/test  # for germain
+dataset_src: /data/shared/spice/maceoff_split/test  # for escher
 dp_data_path:  /data/shared/MLFF/SPICE/maceoff_split/test
 
 # nequip_data_config: configs/simulate/nequip_data_cfg/aspirin.yml
-identifier: 1fs_step_25ps
+identifier: 0.01fs_step_25ps
 sim_type: ocp
 seed: 123
 save_freq: 100
-steps: 25000
+steps: 2500000
 max_test_points: 10000
 # no_evaluate: True
 # init_idx: 1950 # overridden in the command line
@@ -22,4 +23,4 @@ max_test_points: 10000
 kcal: False
 T_init: 300.
 integrator: VelocityVerlet
-integrator_config: {"timestep": 1, "temperature": 300., "ttime": 20.}
+integrator_config: {"timestep": 0.01, "temperature": 300., "ttime": 20.}

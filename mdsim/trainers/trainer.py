@@ -721,7 +721,7 @@ class Trainer(ABC):
             desc="device {}".format(rank),
             disable=disable_tqdm,
         ):
-            with torch.cuda.amp.autocast(enabled=self.scaler is not None):
+            with torch.amp.autocast('cuda', enabled=self.scaler is not None):
                 # out = self._forward([self.convert_batch_to_double(batch) for batch in batch_list])
                 out = self._forward(batch_list)
 
@@ -773,7 +773,6 @@ class Trainer(ABC):
                 predictions["forces"] = out["forces"].detach()
                 return predictions
 
-        breakpoint()
         predictions["forces"] = np.array(predictions["forces"])
         predictions["chunk_idx"] = np.array(predictions["chunk_idx"])
         predictions["energy"] = np.array(predictions["energy"])
@@ -845,7 +844,7 @@ class Trainer(ABC):
                 batch = next(train_loader_iter)
 
                 # Forward, loss, backward.
-                with torch.cuda.amp.autocast(enabled=self.scaler is not None):
+                with torch.amp.autocast('cuda', enabled=self.scaler is not None):
                     out = self._forward(batch)
                     loss = self._compute_loss(out, batch)
                 loss = self.scaler.scale(loss) if self.scaler else loss
@@ -987,7 +986,7 @@ class Trainer(ABC):
         ):
             # batch = [self.convert_batch_to_double(b) for b in batch]
             # Forward.
-            with torch.cuda.amp.autocast(enabled=self.scaler is not None):
+            with torch.amp.autocast('cuda', enabled=self.scaler is not None):
                 out = self._forward(batch)
             loss = self._compute_loss(out, batch)
 
